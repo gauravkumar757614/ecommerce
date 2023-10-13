@@ -1,6 +1,4 @@
-<!--============================
-        MAIN MENU START
-==============================-->
+{{-- MAIN MENU START --}}
 <nav class="wsus__main_menu d-none d-lg-block">
     <div class="container">
         <div class="row">
@@ -312,20 +310,16 @@
                     <ul class="wsus__menu_item wsus__menu_item_right">
                         <li><a href="contact.html">contact</a></li>
                         <li><a href="dsahboard.html">my account</a></li>
-                        <li><a href="login.html">login</a></li>
+                        <li><a href="{{ route('login') }}">login</a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 </nav>
-<!--============================
-            MAIN MENU END
-==============================-->
+{{-- MAIN MENU END --}}
 
-<!--============================
-        MOBILE MENU START
-==============================-->
+{{-- MOBILE MENU START --}}
 <section id="wsus__mobile_menu">
     <span class="wsus__mobile_menu_close"><i class="fal fa-times"></i></span>
     <ul class="wsus__mobile_menu_header_icon d-inline-flex">
@@ -477,6 +471,4 @@
         </div>
     </div>
 </section>
-<!--============================
-            MOBILE MENU END
-==============================-->
+{{-- MOBILE MENU END --}}

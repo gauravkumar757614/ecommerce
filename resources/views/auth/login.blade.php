@@ -1,9 +1,8 @@
 @extends('frontend.layouts.master')
 
 @section('content')
-    <!--============================
-                        BREADCRUMB START
-                    ==============================-->
+    {{-- BREADCRUMB START --}}
+
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -19,14 +18,9 @@
             </div>
         </div>
     </section>
-    <!--============================
-                        BREADCRUMB END
-                    ==============================-->
+    {{-- BREADCRUMB END --}}
 
-
-    <!--============================
-                        LOGIN/REGISTER PAGE START
-                    ==============================-->
+    {{-- LOGIN/REGISTER PAGE START --}}
     <section id="wsus__login_register">
         <div class="container">
             <div class="row">
@@ -49,6 +43,7 @@
                                 aria-labelledby="pills-home-tab2">
                                 <div class="wsus__login">
 
+                                    {{-- Login Form --}}
                                     <form action="{{ route('login') }}" method="POST">
                                         @csrf
 
@@ -56,7 +51,7 @@
                                         <div class="wsus__login_input">
                                             <i class="fas fa-user-tie"></i>
                                             <input id="email" name="email" type="email" placeholder="Email"
-                                                value="{{ old('email') }}" >
+                                                value="{{ old('email') }}">
                                         </div>
                                         {{-- This is the email field --}}
 
@@ -81,47 +76,67 @@
                                         {{-- This is the remember me field End --}}
 
                                         <button class="common_btn" type="submit">login</button>
-                                        <p class="social_text">Sign in with social account</p>
+
+                                        {{-- Social Account Links --}}
+
+                                        {{-- <p class="social_text">Sign in with social account</p>
                                         <ul class="wsus__login_link">
                                             <li><a href="#"><i class="fab fa-google"></i></a></li>
                                             <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
                                             <li><a href="#"><i class="fab fa-twitter"></i></a></li>
                                             <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                                        </ul>
+                                        </ul> --}}
+
+                                        {{-- Social Account Links Ends --}}
                                     </form>
 
                                 </div>
                             </div>
+                            {{-- Login Form Ends --}}
+
+
                             <div class="tab-pane fade" id="pills-profiles" role="tabpanel"
                                 aria-labelledby="pills-profile-tab2">
                                 <div class="wsus__login">
-                                    <form>
+
+                                    {{-- Register Form --}}
+                                    <form action="{{ route('register') }}" method="POST">
+                                        @csrf
+
+                                        {{-- Name Field --}}
                                         <div class="wsus__login_input">
                                             <i class="fas fa-user-tie"></i>
-                                            <input type="text" placeholder="Name">
+                                            <input type="text" placeholder="Name" name="name" id="name"
+                                                value="{{ old('name') }}">
                                         </div>
+                                        {{-- Name Field End --}}
+
+                                        {{-- Email Field --}}
                                         <div class="wsus__login_input">
                                             <i class="far fa-envelope"></i>
-                                            <input type="text" placeholder="Email">
+                                            <input type="email" placeholder="Email" name="email" id="email"
+                                                value="{{ old('email') }}">
                                         </div>
+                                        {{-- Email Field End --}}
+
+                                        {{-- Password Field --}}
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>
-                                            <input type="text" placeholder="Password">
+                                            <input type="password" placeholder="Password" name="password" id="password">
                                         </div>
+                                        {{-- Password Field End --}}
+
+                                        {{-- Confirm password Field --}}
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>
-                                            <input type="text" placeholder="Confirm Password">
+                                            <input type="text" placeholder="Confirm Password"
+                                                name="password_confirmation" id="password_confirmation">
                                         </div>
-                                        <div class="wsus__login_save">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox"
-                                                    id="flexSwitchCheckDefault03">
-                                                <label class="form-check-label" for="flexSwitchCheckDefault03">I consent
-                                                    to the privacy policy</label>
-                                            </div>
-                                        </div>
-                                        <button class="common_btn" type="submit">signup</button>
+                                        {{-- Confirm password Field End --}}
+
+                                        <button class="common_btn mt-4" type="submit">signup</button>
                                     </form>
+                                    {{-- Register Form Ends --}}
                                 </div>
                             </div>
                         </div>
@@ -130,7 +145,5 @@
             </div>
         </div>
     </section>
-    <!--============================
-                            LOGIN/REGISTER PAGE END
-                    ==============================-->
+    {{-- LOGIN/REGISTER PAGE END --}}
 @endsection
