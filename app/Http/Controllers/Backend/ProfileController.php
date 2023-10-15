@@ -69,6 +69,8 @@ class ProfileController extends Controller
             'password'              =>      $request->password
         ]);
 
+        // Giving success message using toastr package
+        toastr('Password updated successfully!');
         return redirect()->back();
     }
 }
