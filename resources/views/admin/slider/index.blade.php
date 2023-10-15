@@ -12,24 +12,33 @@
         </div>
 
         <div class="section-body">
-            <h2 class="section-title">Table</h2>
-            <p class="section-lead">Example of some Bootstrap table components.</p>
 
             <div class="row">
-                <div class="col-12 col-md-6 col-lg-6">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header">
                             <h4>Simple Table</h4>
+
+                            <div class="card-header-action">
+                                <a href="{{ route('admin.slider.create') }}" class="btn btn-primary"> + Create new</a>
+                            </div>
+
                         </div>
                         <div class="card-body">
-
+                            {{-- Yajrabox table data --}}
+                            {{ $dataTable->table() }}
+                            {{-- Yajrabox table data End --}}
                         </div>
 
                     </div>
                 </div>
-
             </div>
 
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    {{-- Script from yajrabox --}}
+    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+@endpush

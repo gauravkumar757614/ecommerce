@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\DataTables\SliderDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Slider;
+use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 
 class SliderController extends Controller
 {
     /**
+     * Importing custom trait for uploading images
+     */
+    use ImageUploadTrait;
+
+    /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(SliderDataTable $dataTable)
     {
-        return view('admin.slider.index');
+        return $dataTable->render('admin.slider.index');
     }
 
     /**
@@ -20,7 +28,7 @@ class SliderController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.slider.create');
     }
 
     /**
@@ -28,7 +36,35 @@ class SliderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'banner'            =>      ['required', 'image', 'max:2048'],
+            'type'              =>      ['string', 'max:200'],
+            'title'             =>      ['required', 'max:200'],
+            'starting_price'    =>      ['max:200'],
+            'btn_url'           =>      ['url'],
+            'serial'            =>      ['required', 'integer'],
+            'status'            =>      ['required'],
+        ]);
+
+        $slider                     =       new Slider();
+
+        /**
+         * Handling image upload through ImageUpload Trait
+         */
+        $imagePath                  =       $this->uploadImage($request, 'banner', 'uploads');
+
+        $slider->banner             =       $imagePath;
+        $slider->type               =       $request->type;
+        $slider->title              =       $request->title;
+        $slider->starting_price     =       $request->starting_price;
+        $slider->btn_url            =       $request->btn_url;
+        $slider->serial             =       $request->serial;
+        $slider->status             =       $request->status;
+        $slider->save();
+
+        // toastr notification for success
+        toastr('Created Successfully', 'success');
+        return redirect()->back();
     }
 
     /**

@@ -19,7 +19,9 @@
     {{-- This is the javascript css cdn for the Laravel Toastr --}}
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-
+    {{-- Jquery datatable css cdn link for yajrabox --}}
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
@@ -86,12 +88,18 @@
     {{-- This is the javascript js cdn for Laravel Toastr --}}
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+    {{-- Jquery datatable js cdn link for yajrabox --}}
+    <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+
     <!-- Page Specific JS File -->
     <script src="{{ asset('backend/assets/js/page/index-0.js') }}"></script>
 
     <!-- Template JS File -->
     <script src="{{ asset('backend/assets/js/scripts.js') }}"></script>
     <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
+
 
     <!-- These are the toastr alerts for the errors -->
     <script>
@@ -101,6 +109,9 @@
             @endforeach
         @endif
     </script>
+
+    @stack('scripts')
+
 </body>
 
 </html>
