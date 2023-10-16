@@ -22,11 +22,18 @@ class SliderDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'slider.action')
-            ->addColumn('banner', function($query){
-                return $img     =   "<img src='".asset($query->banner)."' width='100px'></img>";
+            // Custom edit button
+            ->addColumn('action', function ($query) {
+                $editBtn       =   "<a href='" . route('admin.slider.edit', $query->id) . "' class='btn btn-primary'> <i class='far fa-edit'></i></a>";
+                $deleteBtn     =   "<a href='" . route('admin.slider.destroy', $query->id) . "' class='btn btn-danger ml-2'> <i class='fas fa-user-times'></i></a>";
+
+                return $editBtn . $deleteBtn;
             })
-            ->rawColumns(['banner'])
+
+            ->addColumn('banner', function ($query) {
+                return $img     =   "<img src='" . asset($query->banner) . "' width='100px'></img>";
+            })
+            ->rawColumns(['banner', 'action'])
             ->setRowId('id');
     }
 
@@ -44,20 +51,20 @@ class SliderDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('slider-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('slider-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -70,14 +77,15 @@ class SliderDataTable extends DataTable
             Column::make('banner')->width(200),
             Column::make('title'),
 
+
             /**
              * Custom Column
              */
             Column::computed('action')
-            ->exportable(false)
-            ->printable(false)
-            ->width(60)
-            ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 
