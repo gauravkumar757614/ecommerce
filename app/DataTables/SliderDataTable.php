@@ -23,6 +23,10 @@ class SliderDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', 'slider.action')
+            ->addColumn('banner', function($query){
+                return $img     =   "<img src='".asset($query->banner)."' width='100px'></img>";
+            })
+            ->rawColumns(['banner'])
             ->setRowId('id');
     }
 
@@ -62,13 +66,9 @@ class SliderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
-            Column::make('type'),
+            Column::make('id')->width(100),
+            Column::make('banner')->width(200),
             Column::make('title'),
-            Column::make('starting_price'),
-            Column::make('btn_url'),
-            Column::make('serial'),
-            Column::make('status'),
 
             /**
              * Custom Column
