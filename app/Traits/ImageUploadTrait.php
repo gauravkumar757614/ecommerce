@@ -4,7 +4,6 @@ namespace App\Traits;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Auth;
 
 trait ImageUploadTrait
 {
@@ -42,6 +41,17 @@ trait ImageUploadTrait
             $imageName  =       'media_' . uniqid() . '.' . $ext;
             $image->move(public_path($path), $imageName);
             return $path . '/' . $imageName;
+        }
+    }
+
+    /**
+     * Image delete function when we want to delete a row from database
+     */
+    public function deleteImage($path)
+    {
+        // Checking if the file exists if yes than deleting it
+        if (File::exists(public_path($path))) {
+            File::delete(public_path($path));
         }
     }
 }

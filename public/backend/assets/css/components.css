@@ -416,7 +416,8 @@ table.dataTable.no-footer {
   float: left;
 }
 
-div.dataTables_wrapper div.dataTables_processing {
+/* Because of this we are getting two reloads */
+/* div.dataTables_wrapper div.dataTables_processing {
   font-size: 0 !important;
   background-image: url("../img/spinner.svg") !important;
   background-color: #fff;
@@ -431,7 +432,7 @@ div.dataTables_wrapper div.dataTables_processing {
   transform: translate(-50%, -50%) !important;
   margin: 0 !important;
   opacity: 1 !important;
-}
+} */
 
 /* 1.9 Date Range Picker */
 .daterangepicker.dropdown-menu {

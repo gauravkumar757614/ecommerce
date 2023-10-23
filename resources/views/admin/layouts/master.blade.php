@@ -119,18 +119,20 @@
     {{-- Dynamic delete alert --}}
     <script>
         $(document).ready(function() {
-            // adding csrf token for ajax
+            // Adding csrf token
             $.ajaxSetup({
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            // =========================
+            // Ajax token end
 
             $('body').on('click', '.delete-item', function(event) {
                 event.preventDefault();
+                // Defining delete url
                 let deleteUrl = $(this).attr('href');
 
+                // Sweet alert
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -142,29 +144,33 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
 
+                        // Ajax start
                         $.ajax({
-                                type: 'DELETE',
-                                url: deleteUrl,
+                            type: 'DELETE',
+                            url: deleteUrl,
 
-                                success: function(data) {
-                                    console.log(data);
-                                },
-                                error: function(xhr, status, error) {
-                                    console.log(error);
+                            success: function(data) {
+                                if (data.status == 'success') {
+                                    Swal.fire(
+                                        'Deleted!',
+                                        data.message
+                                    )
+                                } else if (data.status == 'error') {
+                                    Swal.fire(
+                                        'Deleted!',
+                                        data.message
+                                    )
                                 }
-
-
+                                window.location.reload();
+                            },
+                            error: function(xhr, status, error) {
+                                console.log(error);
                             }
-
-                        )
-
-                        Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                        )
+                        })
+                        // Ajax end
                     }
                 })
+                // Sweet alert end
             })
         })
     </script>
