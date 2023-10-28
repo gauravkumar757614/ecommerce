@@ -14,6 +14,7 @@
             </li>
             <li class="menu-header">Starter</li>
 
+            {{-- Manage Website --}}
             <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Manage Website</span></a>
@@ -21,6 +22,7 @@
                     <li><a class="nav-link" href="{{ route('admin.slider.index') }}">Slider</a></li>
                 </ul>
             </li>
+            {{-- Manage Website End --}}
 
             {{-- Category Dropdown --}}
             <li class="dropdown">
@@ -28,6 +30,7 @@
                     <span>Manage Category</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="{{ route('admin.category.index') }}">Category</a></li>
+                    <li><a class="nav-link" href="{{ route('admin.sub-category.index') }}">SubCategory</a></li>
                 </ul>
             </li>
             {{-- Category Dropdown End --}}

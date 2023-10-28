@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\Backend\SubCategoryController;
 use Illuminate\Support\Facades\Route;
 
 // Profile Routes
@@ -15,5 +16,16 @@ Route::post('profile/update/password', [ProfileController::class, 'updatePasswor
 
 // Slider Route
 Route::resource('slider', SliderController::class);
+
+// Creating a change status route in the resource controller
+Route::put('change-status', [CategoryController::class, 'changeStatus'])->name('category.change-status');
+
 // Category Route
 Route::resource('category', CategoryController::class);
+
+
+// Creating a change status route in the resource controller
+// Route::put('change-status', [SubCategoryController::class, 'changeStatus'])->name('category.change-status');
+
+// SubCategory Route
+Route::resource('sub-category', SubCategoryController::class);

@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Slider;
+use App\Models\SubCategory;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class SliderDataTable extends DataTable
+class SubCategoryDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -22,44 +22,49 @@ class SliderDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            // Custom edit button
+
             ->addColumn('action', function ($query) {
                 // Edit button
-                $editBtn       =   "<a href='" . route('admin.slider.edit', $query->id) . "' class='btn btn-primary'>
-                <i class='far fa-edit'></i></a>";
-
+                $editBtn       =   "<a href='" . route('admin.sub-category.edit', $query->id) . "' class='btn btn-primary'>
+            <i class='far fa-edit'></i></a>";
                 // Delete button
-                $deleteBtn     =   "<a href='" . route('admin.slider.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'>
-                 <i class='fas fa-user-times'></i></a>";
+                $deleteBtn     =   "<a href='" . route('admin.sub-category.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'>
+             <i class='fas fa-user-times'></i></a>";
 
                 return $editBtn . $deleteBtn;
             })
 
-            // Custom banner column
-            ->addColumn('banner', function ($query) {
-                return $img     =   "<img src='" . asset($query->banner) . "' width='100px'></img>";
+            // Retrieving name of the category through category relation method
+            ->addColumn('category', function ($query) {
+                return $query->category->name;
             })
 
-            // Custom status colum
+            // Toggle button to change status value
             ->addColumn('status', function ($query) {
-                $active         =       "<i class='badge badge-success'>Active</i>";
-                $inActive       =       "<i class='badge badge-danger'>InActive</i>";
-                if ($query->status == 1) {
-                    return $active;
+                if ($query->status) {
+                    $button     =       '<label class="custom-switch mt-2">
+                                            <input type="checkbox" name="custom-switch-checkbox"
+                                            class="custom-switch-input change-status" data-id="' . $query->id . '" checked>
+                                            <span class="custom-switch-indicator"></span>
+                                        </label>';
+                    return $button;
                 } else {
-                    return $inActive;
+                    $button     =       '<label class="custom-switch mt-2">
+                                            <input type="checkbox" name="custom-switch-checkbox"
+                                            class="custom-switch-input change-status" data-id="' . $query->id . '">
+                                            <span class="custom-switch-indicator"></span>
+                                        </label>';
+                    return $button;
                 }
             })
-
-
-            ->rawColumns(['banner', 'action', 'status'])
+            ->rawColumns(['action', 'status', 'category'])
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Slider $model): QueryBuilder
+    public function query(SubCategory $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -70,11 +75,11 @@ class SliderDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('slider-table')
+            ->setTableId('subcategory-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
-            ->orderBy(1)
+            ->orderBy(0)
             ->selectStyleSingle()
             ->buttons([
                 Button::make('excel'),
@@ -92,15 +97,13 @@ class SliderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id')->width(100),
-            Column::make('banner')->width(200),
-            Column::make('title'),
-            Column::make('serial'),
-            Column::make('status'),
 
-            /**
-             * Custom Column
-             */
+            Column::make('id')->width(100),
+            Column::make('name')->width(300),
+            Column::make('slug')->width(300),
+            Column::make('category')->width(300),
+            Column::make('status')->width(200),
+
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -114,6 +117,6 @@ class SliderDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Slider_' . date('YmdHis');
+        return 'SubCategory_' . date('YmdHis');
     }
 }
