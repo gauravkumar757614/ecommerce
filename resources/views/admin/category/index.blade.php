@@ -41,8 +41,8 @@
     <script>
         $(document).ready(function() {
             $('body').on('click', '.change-status', function() {
-                let isChecked = $(this).is(':checked')
-                let id = $(this).data('id')
+                let isChecked = $(this).is(':checked');
+                let id = $(this).data('id');
 
                 $.ajax({
                     url: "{{ route('admin.category.change-status') }}",
@@ -52,7 +52,7 @@
                         id: id
                     },
                     success: function(data) {
-                        console.log(data);
+                        toastr.success(data.message)
                     },
                     error: function(xhr, status, error) {
                         console.log(error);

@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Category</h1>
+            <h1>Sub Category</h1>
         </div>
 
         <div class="section-body">
@@ -11,39 +11,45 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Edit Categories</h4>
+                            <h4>Edit SubCategories</h4>
                         </div>
                         <div class="card-body">
                             {{-- Create Category Form --}}
-                            <form action="{{ route('admin.category.update', $category->id) }}" method="POST">
+                            <form action="{{ route('admin.sub-category.update', $subCategory->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
-                                {{-- Icon Picker Button --}}
+
+                                {{-- Select Category Id Field --}}
                                 <div class="form-group">
-                                    <label for="">Icon</label>
-                                    <div>
-                                        <button name="icon" class="btn btn-primary" role="iconpicker"
-                                            data-selected-class="btn-danger" data-unselected-class="btn-info"
-                                            data-icon="{{ $category->icon }}"></button>
-                                    </div>
+                                    <label for="inputState">Category</label>
+                                    <select id="inputState" class="form-control" name="category">
+                                        <option value="">Select</option>
+                                        @foreach ($categories as $category)
+                                            <option
+                                                {{ $category->id == $subCategory->category_id ? 'selected' : '' }}
+                                                value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                {{-- Icon Picker Button End --}}
+                                {{-- Select Category Id Field End --}}
 
                                 {{-- Name Field --}}
                                 <div class="form-group">
                                     <label for="">Name</label>
-                                    <input type="text" class="form-control" name="name" value="{{ $category->name }}">
+                                    <input type="text" class="form-control" name="name"
+                                        value="{{ $subCategory->name }}">
                                 </div>
                                 {{-- Name Field End --}}
 
-                                {{-- Status Field End --}}
+                                {{-- Status Field --}}
                                 <div class="form-group">
                                     <label for="inputState">Status</label>
                                     <select name="status" id="inputState" class="form-control">
-                                        <option {{ $category->status == 1 ? 'selected' : '' }} value="1">Active
+                                        <option {{ $subCategory->status == 1 ? 'selected' : '' }} value="1">Active
                                         </option>
-                                        <option {{ $category->status == 0 ? 'selected' : '' }} value="0">Inactive
+                                        <option {{ $subCategory->status == 0 ? 'selected' : '' }} value="0">Inactive
                                         </option>
+
                                     </select>
                                 </div>
                                 {{-- Status Field End --}}

@@ -105,9 +105,9 @@ class CategoryController extends Controller
      */
     public function changeStatus(Request $request)
     {
-        // $category               =       Category::findOrFail($request->id);
-        // $category->status       =       $request->status ? 1 : 0;
-        // $category->save();
-        return response(['success' => 'status updated successfully!']);
+        $category               =       Category::findOrFail($request->id);
+        $category->status       =       $request->status == 'true' ? 1 : 0;
+        $category->save();
+        return response(['message' => 'status updated successfully!']);
     }
 }

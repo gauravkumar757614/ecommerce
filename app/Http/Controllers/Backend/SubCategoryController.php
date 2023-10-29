@@ -65,7 +65,8 @@ class SubCategoryController extends Controller
     public function edit(string $id)
     {
         $subCategory        =       SubCategory::findOrFail($id);
-        return view('admin.sub-category.edit', compact('subCategory'));
+        $categories         =       Category::all();
+        return view('admin.sub-category.edit', compact('subCategory', 'categories'));
     }
 
     /**
@@ -74,20 +75,21 @@ class SubCategoryController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-
-            'name'          =>      ['required', 'string', 'max:200', 'unique:categories,name,' . $id],
+            'category'      =>      ['required'],
+            'name'          =>      ['required', 'string', 'max:200', 'unique:sub_categories,name,' . $id],
             'status'        =>      ['required']
         ]);
 
-        $subCategory               =       SubCategory::findOrFail($id);
+        $subCategory                    =       SubCategory::findOrFail($id);
 
-        $subCategory->name         =       $request->name;
-        $subCategory->slug         =       Str::slug($request->name);
-        $subCategory->status       =       $request->status;
+        $subCategory->category_id       =       $request->category;
+        $subCategory->name              =       $request->name;
+        $subCategory->slug              =       Str::slug($request->name);
+        $subCategory->status            =       $request->status;
         $subCategory->save();
 
-        toastr('Created Successfully!', 'success');
-        return redirect()->route('admin.category.index');
+        toastr('Updated Successfully!', 'success');
+        return redirect()->route('admin.sub-category.index');
     }
 
     /**
@@ -97,7 +99,18 @@ class SubCategoryController extends Controller
     {
         $subCategory               =       SubCategory::findOrFail($id);
         $subCategory->delete();
-        toastr('Deleted Successfully!', 'success');
-        return redirect()->route('admin.category.index');
+
+        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+    }
+
+    /**
+     * Change status of specified resource from storage
+     */
+    public function changeStatus(Request $request)
+    {
+        $subcategory               =       SubCategory::findOrFail($request->id);
+        $subcategory->status       =       $request->status == 'true' ? 1 : 0;
+        $subcategory->save();
+        return response(['message' => 'status updated successfully!']);
     }
 }

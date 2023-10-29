@@ -25,7 +25,7 @@ Route::resource('category', CategoryController::class);
 
 
 // Creating a change status route in the resource controller
-// Route::put('change-status', [SubCategoryController::class, 'changeStatus'])->name('category.change-status');
+Route::put('subcategory/change-status', [SubCategoryController::class, 'changeStatus'])->name('sub-category.change-status');
 
 // SubCategory Route
 Route::resource('sub-category', SubCategoryController::class);
