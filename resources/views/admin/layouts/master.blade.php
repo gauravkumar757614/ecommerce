@@ -160,12 +160,15 @@
                                 if (data.status == 'success') {
                                     Swal.fire(
                                         'Deleted!',
-                                        data.message
+                                        data.message,
+                                        'success'
                                     )
+                                    window.location.reload();
                                 } else if (data.status == 'error') {
                                     Swal.fire(
                                         'Deleted!',
-                                        data.message
+                                        data.message,
+                                        'error'
                                     )
                                 }
                                 window.location.reload();

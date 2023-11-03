@@ -127,9 +127,9 @@ class ChildCategoryController extends Controller
      */
     public function changeStatus(Request $request)
     {
-        $child_category                 =       ChildCategory::findOrFail($request->id);
-        $child_category->status         =       $request->status == 'true' ? 1 : 0;
-        $child_category->save();
+        $category                 =       ChildCategory::findOrFail($request->id);
+        $category->status         =       $request->status == 'true' ? 1 : 0;
+        $category->save();
         return response(['message' => 'status updated successfully!']);
     }
 }
