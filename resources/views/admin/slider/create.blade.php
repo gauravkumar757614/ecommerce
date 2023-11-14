@@ -69,8 +69,6 @@
                                 </div>
                                 {{-- Status Field End --}}
 
-
-
                                 <button class="btn btn-primary" type="submit">Create</button>
                             </form>
 
