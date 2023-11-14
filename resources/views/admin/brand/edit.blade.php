@@ -3,60 +3,79 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Category</h1>
+            <h1>Brand</h1>
         </div>
 
         <div class="section-body">
+
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Edit Categories</h4>
+                            <h4>Edit Brand</h4>
                         </div>
                         <div class="card-body">
-                            {{-- Create Category Form --}}
-                            <form action="{{ route('admin.category.update', $category->id) }}" method="POST">
+
+                            <form action="{{ route('admin.brand.update', $brand->id) }}" method="POST"
+                                enctype="multipart/form-data">
+
                                 @csrf
                                 @method('PUT')
-                                {{-- Icon Picker Button --}}
+
+                                {{-- Preview Image Field --}}
                                 <div class="form-group">
-                                    <label for="">Icon</label>
-                                    <div>
-                                        <button name="icon" class="btn btn-primary" role="iconpicker"
-                                            data-selected-class="btn-danger" data-unselected-class="btn-info"
-                                            data-icon="{{ $category->icon }}"></button>
-                                    </div>
+                                    <label for="">Preview</label>
+                                    <br>
+                                    <img src="{{ asset($brand->logo) }}" alt="brand_image" srcset="" width="200">
                                 </div>
-                                {{-- Icon Picker Button End --}}
+                                {{-- Preview Image Field End --}}
+
+                                {{-- Image Field --}}
+                                <div class="form-group">
+                                    <label for="">Logo</label>
+                                    <input type="file" class="form-control" name="logo">
+                                </div>
+                                {{-- Image Field End --}}
 
                                 {{-- Name Field --}}
                                 <div class="form-group">
                                     <label for="">Name</label>
-                                    <input type="text" class="form-control" name="name" value="{{ $category->name }}">
+                                    <input type="text" class="form-control" name="name" value="{{ $brand->name }}">
                                 </div>
                                 {{-- Name Field End --}}
 
-                                {{-- Status Field End --}}
+                                {{-- Featured Field End --}}
+                                <div class="form-group">
+                                    <label for="inputState">Is Featured</label>
+                                    <select name="is_featured" id="inputState" class="form-control">
+                                        <option value="">Select</option>
+                                        <option {{ $brand->is_featured == 1 ? 'selected' : '' }} value="1">Yes</option>
+                                        <option {{ $brand->is_featured == 0 ? 'selected' : '' }} value="0">No</option>
+                                    </select>
+                                </div>
+                                {{-- Featured Field End --}}
+
+                                {{-- Status Field --}}
                                 <div class="form-group">
                                     <label for="inputState">Status</label>
                                     <select name="status" id="inputState" class="form-control">
-                                        <option {{ $category->status == 1 ? 'selected' : '' }} value="1">Active
+                                        <option {{ $brand->status == 1 ? 'selected' : '' }} value="1">Active
                                         </option>
-                                        <option {{ $category->status == 0 ? 'selected' : '' }} value="0">Inactive
+                                        <option {{ $brand->status == 1 ? 'selected' : '' }} value="0">Inactive
                                         </option>
                                     </select>
                                 </div>
                                 {{-- Status Field End --}}
 
-                                {{-- Submit Button --}}
-                                <button type="submit" class="btn btn-primary">Update</button>
-                                {{-- Submit Button End --}}
+                                <button class="btn btn-primary" type="submit">Update</button>
                             </form>
-                            {{-- Create Category Form End --}}
+
                         </div>
+
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 @endsection

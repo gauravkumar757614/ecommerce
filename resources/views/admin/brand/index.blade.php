@@ -19,6 +19,7 @@
                             </div>
                             {{-- Category create Button End --}}
                         </div>
+
                         <div class="card-body">
                             {{-- Yajrabox table data --}}
                             {{ $dataTable->table() }}

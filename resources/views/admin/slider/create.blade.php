@@ -19,7 +19,7 @@
                                 @csrf
                                 {{-- Image Field --}}
                                 <div class="form-group">
-                                    <label for="">Type</label>
+                                    <label for="">Banner</label>
                                     <input type="file" class="form-control" name="banner">
                                 </div>
                                 {{-- Image Field End --}}
