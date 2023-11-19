@@ -23,5 +23,7 @@ class AdminProfileSeeder extends Seeder
         $vendor->address        =       'USA';
         $vendor->description    =       'shop description';
         $vendor->user_id        =       $user->id;
+
+        $vendor->save();
     }
 }

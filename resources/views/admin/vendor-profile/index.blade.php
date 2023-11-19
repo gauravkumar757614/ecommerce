@@ -21,6 +21,15 @@
                                 enctype="multipart/form-data">
                                 @csrf
 
+                                {{-- Preview Image Field --}}
+                                <div class="form-group">
+                                    <label for="">Preview</label>
+                                    <br>
+                                    <img src="{{ asset($profile->banner) }}" alt="vendor_profile_images" srcset=""
+                                        width="200">
+                                </div>
+                                {{-- Preview Image Field End --}}
+
                                 {{-- Image Field --}}
                                 <div class="form-group">
                                     <label for="">Banner</label>
@@ -31,42 +40,45 @@
                                 {{-- Phone Field --}}
                                 <div class="form-group">
                                     <label for="">Phone</label>
-                                    <input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
+                                    <input type="text" class="form-control" name="phone" value="{{ $profile->phone }}">
                                 </div>
                                 {{-- Phone Field End --}}
 
                                 {{-- Email Field --}}
                                 <div class="form-group">
                                     <label for="">Email</label>
-                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                    <input type="email" class="form-control" name="email" value="{{ $profile->email }}">
                                 </div>
                                 {{-- Email Field End --}}
 
                                 {{-- Address Field --}}
                                 <div class="form-group">
                                     <label for="">Address</label>
-                                    <input type="text" class="form-control" name="address" value="{{ old('address') }}">
+                                    <input type="text" class="form-control" name="address"
+                                        value="{{ $profile->address }}">
                                 </div>
                                 {{-- Address Field End --}}
 
                                 {{-- Description Field --}}
                                 <div class="form-group">
                                     <label for="">Description</label>
-                                    <textarea name="description" class="summernote"></textarea>
+                                    <textarea name="description" class="summernote"> {{ $profile->description }}</textarea>
                                 </div>
                                 {{-- Description Field End --}}
 
                                 {{-- Facebook link Field --}}
                                 <div class="form-group">
                                     <label for="">Facebook</label>
-                                    <input type="text" class="form-control" name="fb_link" value="{{ old('fb_link') }}">
+                                    <input type="text" class="form-control" name="fb_link"
+                                        value="{{ $profile->fb_link }}">
                                 </div>
                                 {{-- Facebook link Field End --}}
 
                                 {{-- Twitter link Field --}}
                                 <div class="form-group">
                                     <label for="">Twitter</label>
-                                    <input type="text" class="form-control" name="tw_link" value="{{ old('tw_link') }}">
+                                    <input type="text" class="form-control" name="tw_link"
+                                        value="{{ $profile->tw_link }}">
                                 </div>
                                 {{-- Twitter link Field End --}}
 
@@ -74,7 +86,7 @@
                                 <div class="form-group">
                                     <label for="">Instagram</label>
                                     <input type="text" class="form-control" name="insta_link"
-                                        value="{{ old('insta_link') }}">
+                                        value="{{ $profile->insta_link }}">
                                 </div>
                                 {{-- Instagram link Field End --}}
 
