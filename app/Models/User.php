@@ -42,4 +42,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * One to one relation with vendor
+     */
+    public function vendor(){
+        return $this->hasOne(Vendor::class);
+    }
+
 }

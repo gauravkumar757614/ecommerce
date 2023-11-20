@@ -7,11 +7,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
+use App\Models\Product;
 use App\Models\SubCategory;
+use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
+    use ImageUploadTrait;
     /**
      * Display a listing of the resource.
      */
@@ -38,7 +43,48 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'image'                 =>      ['required', 'image', 'max:3000'],
+            'name'                  =>      ['required', 'max:200'],
+            'category'              =>      ['required',],
+            'brand'                 =>      ['required'],
+            'price'                 =>      ['required'],
+            'qty'                   =>      ['required'],
+            'short_description'     =>      ['required', 'max:600'],
+            'long_description'      =>      ['required'],
+            'product_type'          =>      ['required'],
+        ]);
+
+        $product        =       new Product();
+        $file_path      =       $this->uploadImage($request, 'image', 'uploads');
+
+        $product->name                  =       $request->name;
+        $product->slug                  =       Str::slug($request->name);
+        $product->thumb_image           =       $file_path;
+        $product->vendor_id             =       Auth::user()->vendor->id;
+        $product->category_id           =       $request->category;
+        $product->sub_category_id       =       $request->sub_category;
+        $product->child_category_id     =       $request->child_category;
+        $product->brand_id              =       $request->brand;
+        $product->qty                   =       $request->qty;
+        $product->short_description     =       $request->short_description;
+        $product->long_description      =       $request->long_description;
+        $product->video_link            =       $request->video_link;
+        $product->sku                   =       $request->sku;
+        $product->price                 =       $request->price;
+        $product->offer_price           =       $request->offer_price;
+        $product->offer_start_date      =       $request->offer_start_date;
+        $product->offer_end_date        =       $request->offer_end_date;
+        $product->product_type          =       $request->product_type;
+        $product->is_approved           =       1;
+        $product->seo_title             =       $request->seo_title;
+        $product->seo_description       =       $request->seo_description;
+        $product->status                =       $request->status;
+        $product->save();
+
+        toastr('Create successfully!', 'success');
+        return redirect()->route('admin.products.index');
+
     }
 
     /**
@@ -54,7 +100,10 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product        =       Product::findOrFail($id);
+        $categories     =       Category::all();
+        $brands         =       Brand::all();
+        return view('admin.product.edit', compact('product', 'categories', 'brands'));
     }
 
     /**
@@ -62,7 +111,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
     }
 
     /**
@@ -90,5 +139,4 @@ class ProductController extends Controller
         $child_categories     =       ChildCategory::where('sub_category_id', $request->id)->get();
         return $child_categories;
     }
-
 }

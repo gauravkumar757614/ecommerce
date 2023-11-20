@@ -15,7 +15,7 @@
                             <h4>Create Product</h4>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('admin.slider.store') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 {{-- Image field --}}
                                 <div class="form-group">
@@ -102,14 +102,14 @@
                                 {{-- Price Field --}}
                                 <div class="form-group">
                                     <label for="">Price</label>
-                                    <input type="text" class="form-control" name="price" value="{{ old('price') }}">
+                                    <input type="number" class="form-control" name="price" value="{{ old('price') }}">
                                 </div>
                                 {{-- Price Field End --}}
 
                                 {{-- Offer price Field --}}
                                 <div class="form-group">
                                     <label for="">Offer price</label>
-                                    <input type="text" class="form-control" name="offer_price"
+                                    <input type="number" class="form-control" name="offer_price"
                                         value="{{ old('offer_price') }}">
                                 </div>
                                 {{-- Offer price Field End --}}
@@ -149,7 +149,7 @@
                                 {{-- Video link field --}}
                                 <div class="form-group">
                                     <label for="">Video link</label>
-                                    <input type="number" class="form-control" name="video_link"
+                                    <input type="text" class="form-control" name="video_link"
                                         value="{{ old('video_link') }}">
                                 </div>
                                 {{-- Video link field end --}}
@@ -168,57 +168,38 @@
                                 </div>
                                 {{-- Long description field end --}}
 
-                                {{-- All boolean values fields --}}
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        {{-- Is top Field --}}
-                                        <div class="form-group">
-                                            <label for="inputState">Is top</label>
-                                            <select name="is_top" id="inputState" class="form-control">
-                                                <option value="">Select</option>
-                                                <option value="">Yes</option>
-                                                <option value="">No</option>
-                                            </select>
-                                        </div>
-                                        {{-- Is top Field End --}}
-                                    </div>
-                                    <div class="col-md-4">
-                                        {{-- Is best Field --}}
-                                        <div class="form-group">
-                                            <label for="inputState">Is best</label>
-                                            <select name="is_best" id="inputState" class="form-control">
-                                                <option value="">Select</option>
-                                                <option value="">Yes</option>
-                                                <option value="">No</option>
-                                            </select>
-                                        </div>
-                                        {{-- Is best Field End --}}
-                                    </div>
-                                    <div class="col-md-4">
-                                        {{-- Is featured Field --}}
-                                        <div class="form-group">
-                                            <label for="inputState">Is featured</label>
-                                            <select name="is_featured" id="inputState" class="form-control">
-                                                <option value="">Select</option>
-                                                <option value="">Yes</option>
-                                                <option value="">No</option>
-                                            </select>
-                                        </div>
-                                        {{-- Is featured Field End --}}
-                                    </div>
+                                {{-- Top, best, featured fields --}}
+                                <div class="form-group">
+                                    <label for="inputState">Product type</label>
+                                    <select name="product_type" id="inputState" class="form-control">
+                                        <option value="">Select</option>
+                                        <option value="new_arrival">New arrival</option>
+                                        <option value="featured_product">Featured product</option>
+                                        <option value="top_product">Top product</option>
+                                        <option value="best_product">Best product</option>
+                                    </select>
                                 </div>
-                                {{-- All boolean values fields end --}}
+                                {{-- Top, best, featuredfields end --}}
 
+                                {{-- Seo title field --}}
+                                <div class="form-group">
+                                    <label for="">Seo title</label>
+                                    <input type="text" class="form-control" name="seo_title"
+                                        value="{{ old('seo_title') }}">
+                                </div>
+                                {{-- Seo title field end --}}
 
-
-
-
+                                {{-- Seo description field --}}
+                                <div class="form-group">
+                                    <label for="">Seo description</label>
+                                    <textarea name="seo_description" id="" class="form-control"></textarea>
+                                </div>
+                                {{-- Seo description field end --}}
 
                                 {{-- Status Field --}}
                                 <div class="form-group">
                                     <label for="inputState">Status</label>
                                     <select name="status" id="inputState" class="form-control">
-                                        <option value="">Select</option>
                                         <option value="1">Active</option>
                                         <option value="0">Inactive</option>
                                     </select>

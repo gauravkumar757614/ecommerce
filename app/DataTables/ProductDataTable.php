@@ -22,7 +22,87 @@ class ProductDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'product.action')
+            // Custom buttons
+            ->addColumn('action', function ($query) {
+                // Edit button
+                $editBtn       =   "<a href='" . route('admin.products.edit', $query->id) . "' class='btn btn-primary'>
+                <i class='far fa-edit'></i></a>";
+
+                // Delete button
+                $deleteBtn     =   "<a href='" . route('admin.products.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'>
+                 <i class='fas fa-user-times'></i></a>";
+
+                // More custom buttons
+                $settings      =    '<div class="dropdown dropleft d-inline ml-1">
+                                        <button class="btn btn-primary dropdown-toggle"
+                                                type="button" id="dropdownMenuButton2"
+                                                data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+
+                                                <i class="fas fa-cog"></i>
+
+                                        </button>
+
+                                        <div class="dropdown-menu">
+
+                                        <a class="dropdown-item has-icon" href="#"><i class="far fa-heart"></i> Gallery Images</a>
+                                        <a class="dropdown-item has-icon" href="#"><i class="far fa-file"></i> Another action</a>
+                                        <a class="dropdown-item has-icon" href="#"><i class="far fa-clock"></i> Something else here</a>
+
+                                        </div>
+
+                                    </div>';
+
+                return $editBtn . $deleteBtn . $settings;
+            })
+
+            // Custom image column
+            ->addColumn('image', function ($query) {
+                return $image      =    "<img src='" . asset($query->thumb_image) . "' width='50'></img>";
+            })
+
+            // Toggle button to change status value
+            ->addColumn('status', function ($query) {
+                if ($query->status) {
+                    $button     =       '<label class="custom-switch mt-2">
+                                            <input type="checkbox" name="custom-switch-checkbox"
+                                            class="custom-switch-input change-status" data-id="' . $query->id . '" checked>
+                                            <span class="custom-switch-indicator"></span>
+                                        </label>';
+                    return $button;
+                } else {
+                    $button     =       '<label class="custom-switch mt-2">
+                                            <input type="checkbox" name="custom-switch-checkbox"
+                                            class="custom-switch-input change-status" data-id="' . $query->id . '">
+                                            <span class="custom-switch-indicator"></span>
+                                        </label>';
+                    return $button;
+                }
+            })
+
+            // Custom icon column
+            ->addColumn('type', function ($query) {
+                switch ($query->product_type) {
+                    case 'new_arrival':
+                        return "<i class='badge badge-dark'>'" . $query->product_type . "'</i>";
+                        break;
+                    case 'featured_product':
+                        return "<i class='badge badge-success'>'" . $query->product_type . "'</i>";
+                        break;
+                    case 'top_product':
+                        return "<i class='badge badge-info'>'" . $query->product_type . "'</i>";
+                        break;
+                    case 'best_product':
+                        return "<i class='badge badge-warning'>'" . $query->product_type . "'</i>";
+                        break;
+
+                    default:
+                    return "<i class='badge badge-success'></i>";
+                    break;
+                }
+            })
+
+            ->rawColumns(['action', 'image', 'status', 'type'])
             ->setRowId('id');
     }
 
@@ -44,7 +124,7 @@ class ProductDataTable extends DataTable
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
-            ->orderBy(1)
+            ->orderBy(0)
             ->selectStyleSingle()
             ->buttons([
                 Button::make('excel'),
@@ -63,13 +143,16 @@ class ProductDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('image'),
+            Column::make('name'),
+            Column::make('price'),
+            Column::make('type')->width(150),
+            Column::make('status'),
+
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(60)
+                ->width(200)
                 ->addClass('text-center'),
         ];
     }
