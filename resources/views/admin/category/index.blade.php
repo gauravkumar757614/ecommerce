@@ -10,6 +10,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
+
                         <div class="card-header">
                             <h4>All Categories</h4>
                             {{-- Category create Button --}}

@@ -52,7 +52,9 @@ class ProductController extends Controller
             'qty'                   =>      ['required'],
             'short_description'     =>      ['required', 'max:600'],
             'long_description'      =>      ['required'],
-            'product_type'          =>      ['required'],
+            'seo_title'             =>      ['nullable', 'max:200'],
+            'seo_description'       =>      ['nullable', 'max:250'],
+            'status'                =>      ['required']
         ]);
 
         $product        =       new Product();
@@ -84,7 +86,6 @@ class ProductController extends Controller
 
         toastr('Create successfully!', 'success');
         return redirect()->route('admin.products.index');
-
     }
 
     /**
@@ -100,10 +101,13 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product        =       Product::findOrFail($id);
-        $categories     =       Category::all();
-        $brands         =       Brand::all();
-        return view('admin.product.edit', compact('product', 'categories', 'brands'));
+        $product            =       Product::findOrFail($id);
+        $categories         =       Category::all();
+        $sub_categories     =       SubCategory::where('category_id', $product->category_id)->get();
+        $child_categories   =       ChildCategory::where('sub_category_id', $product->sub_category_id)->get();
+        $brands             =       Brand::all();
+
+        return view('admin.product.edit', compact('product', 'categories', 'sub_categories', 'child_categories', 'brands'));
     }
 
     /**
@@ -111,7 +115,49 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'image'                 =>      ['nullable', 'image', 'max:3000'],
+            'name'                  =>      ['required', 'max:200'],
+            'category'              =>      ['required',],
+            'brand'                 =>      ['required'],
+            'price'                 =>      ['required'],
+            'qty'                   =>      ['required'],
+            'short_description'     =>      ['required', 'max:600'],
+            'long_description'      =>      ['required'],
+            'seo_title'             =>      ['nullable', 'max:200'],
+            'seo_description'       =>      ['nullable', 'max:250'],
+            'status'                =>      ['required']
+        ]);
 
+        $product        =       Product::findOrFail($id);
+        $file_path      =       $this->updateImage($request, 'image', 'uploads', $product->thumb_image);
+
+        $product->name                  =       $request->name;
+        $product->slug                  =       Str::slug($request->name);
+        $product->thumb_image           =       empty(!$file_path) ? $file_path : $product->thumb_image;
+        $product->vendor_id             =       Auth::user()->vendor->id;
+        $product->category_id           =       $request->category;
+        $product->sub_category_id       =       $request->sub_category;
+        $product->child_category_id     =       $request->child_category;
+        $product->brand_id              =       $request->brand;
+        $product->qty                   =       $request->qty;
+        $product->short_description     =       $request->short_description;
+        $product->long_description      =       $request->long_description;
+        $product->video_link            =       $request->video_link;
+        $product->sku                   =       $request->sku;
+        $product->price                 =       $request->price;
+        $product->offer_price           =       $request->offer_price;
+        $product->offer_start_date      =       $request->offer_start_date;
+        $product->offer_end_date        =       $request->offer_end_date;
+        $product->product_type          =       $request->product_type;
+        $product->is_approved           =       1;
+        $product->seo_title             =       $request->seo_title;
+        $product->seo_description       =       $request->seo_description;
+        $product->status                =       $request->status;
+        $product->save();
+
+        toastr('Updated successfully!', 'success');
+        return redirect()->route('admin.products.index');
     }
 
     /**

@@ -45,9 +45,9 @@ class ProductDataTable extends DataTable
 
                                         <div class="dropdown-menu">
 
-                                        <a class="dropdown-item has-icon" href="#"><i class="far fa-heart"></i> Gallery Images</a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="far fa-file"></i> Another action</a>
-                                        <a class="dropdown-item has-icon" href="#"><i class="far fa-clock"></i> Something else here</a>
+                                        <a class="dropdown-item has-icon" href="' . route("admin.products-image-gallery.index") . '"><i class="far fa-heart"></i> Images Gallery </a>
+                                        <a class="dropdown-item has-icon" href="' . route("admin.image-gallery.index") . '"><i class="far fa-file"></i> Another action</a>
+                                        <a class="dropdown-item has-icon" href="' . route("admin.image-gallery.index") . '"><i class="far fa-clock"></i> Something else here</a>
 
                                         </div>
 
@@ -97,8 +97,8 @@ class ProductDataTable extends DataTable
                         break;
 
                     default:
-                    return "<i class='badge badge-success'></i>";
-                    break;
+                        return "<i class='badge badge-success'></i>";
+                        break;
                 }
             })
 

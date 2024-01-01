@@ -65,9 +65,14 @@
                                         <div class="form-group">
                                             <label for="inputState">Sub Category</label>
                                             <select name="sub_category" id="inputState" class="form-control sub-category">
-
                                                 <option value="">Select</option>
-
+                                                @foreach ($sub_categories as $sub_category)
+                                                    <option
+                                                        {{ $sub_category->id == $product->sub_category_id ? 'selected' : '' }}
+                                                        value={{ $sub_category->id }}>
+                                                        {{ $sub_category->name }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         {{-- Sub Category Field End --}}
@@ -79,9 +84,14 @@
                                             <label for="inputState">Child Category</label>
                                             <select name="child_category" id="inputState"
                                                 class="form-control child-category">
-
                                                 <option value="">Select</option>
-
+                                                @foreach ($child_categories as $child_category)
+                                                    <option
+                                                        {{ $child_category->id == $product->child_category_id ? 'selected' : '' }}
+                                                        value="{{ $child_category->id }}">
+                                                        {{ $child_category->name }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         {{-- Child Category Field End --}}
@@ -171,7 +181,7 @@
                                 {{-- Short description field --}}
                                 <div class="form-group">
                                     <label for="">Short description</label>
-                                    <textarea name="short_description" id="" class="form-control"> {{ $product->short_description }}</textarea>
+                                    <textarea name="short_description" id="" class="form-control"> {!! $product->short_description !!}</textarea>
                                 </div>
                                 {{-- Short description field end --}}
 
@@ -250,7 +260,7 @@
         $(document).ready(function() {
             $('body').on('change', '.main-category', function(e) {
                 let id = $(this).val();
-
+                $('.child-category').html('<option value="">Select</option>')
                 // Ajax code fetching records dynamically from sub category model
                 $.ajax({
                     method: 'GET',
