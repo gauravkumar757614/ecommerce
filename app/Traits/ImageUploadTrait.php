@@ -25,6 +25,28 @@ trait ImageUploadTrait
     }
 
     /**
+     * Upload Multiple Image method
+     */
+    public function uploadMultipleImage(Request $request, $inputName, $path)
+    {
+        $imagePaths = [];
+        // This code will upload the image file at public path and store the path in the table
+        if ($request->hasFile($inputName)) {
+            //uploading new image
+            $images      =       $request->{$inputName};
+            foreach ($images as $image) {
+                $ext        =       $image->getClientOriginalExtension();
+                $imageName  =       'media_' . uniqid() . '.' . $ext;
+                $image->move(public_path($path), $imageName);
+                $imagePaths[] = $path . '/' . $imageName;
+            }
+            return $imagePaths;
+        }
+    }
+
+
+
+    /**
      * Update Image method
      */
     public function updateImage(Request $request, $inputName, $path, $oldPath = null)

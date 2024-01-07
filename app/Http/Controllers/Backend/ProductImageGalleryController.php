@@ -4,16 +4,21 @@ namespace App\Http\Controllers\Backend;
 
 use App\DataTables\ProductImageGalleryDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Product;
+use App\Models\ProductImageGallery;
+use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 
 class ProductImageGalleryController extends Controller
 {
+    use ImageUploadTrait;
     /**
      * Display a listing of the resource.
      */
-    public function index(ProductImageGalleryDataTable $dataTable)
+    public function index(Request $request, ProductImageGalleryDataTable $dataTable)
     {
-        return $dataTable->render('admin.product.image-gallery.index');
+        $product        =       Product::findOrFail($request->product);
+        return $dataTable->render('admin.product.image-gallery.index', compact('product'));
     }
 
     /**
@@ -29,7 +34,30 @@ class ProductImageGalleryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'image.*'       =>      ['required', 'image', 'max:2048']
+        ]);
+
+        $data = [];
+        // $productImageGallery        =       new ProductImageGallery();
+        $imagePaths                 =       $this->uploadMultipleImage($request, 'image', 'uploads');
+
+        foreach ($imagePaths as $path) {
+            $data[] = [
+                'image'         => $path,
+                'product_id'    => $request->product,
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ];
+            // $productImageGallery->image         =       $path;
+            // $productImageGallery->idate         =       $request->product;
+            // $productImageGallery->save();
+        }
+
+        ProductImageGallery::insert($data);
+
+        toastr('Images uploaded successfully!', 'success');
+        return redirect()->back();
     }
 
     /**
@@ -61,6 +89,10 @@ class ProductImageGalleryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $productImageGallery        =       ProductImageGallery::findOrFail($id);
+        $this->deleteImage($productImageGallery->image);
+        $productImageGallery->delete();
+
+        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 }
