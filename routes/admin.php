@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProductImageGalleryController;
+use App\Http\Controllers\Backend\ProductVariantController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
@@ -54,4 +55,10 @@ Route::get('product/get-subcategories', [ProductController::class, 'getSubCatego
 Route::get('product/get-child-categories', [ProductController::class, 'getChildCategories'])->name('product.get-child-categories');
 // Products routes
 Route::resource('products', ProductController::class);
+// Products image gallery routes
 Route::resource('products-image-gallery', ProductImageGalleryController::class);
+
+// Creating a change status route in the resource controller
+Route::put('products-variant/change-status', [ProductVariantController::class, 'changeStatus'])->name('products-variant.change-status');
+// Products variant routes
+Route::resource('products-variant', ProductVariantController::class);

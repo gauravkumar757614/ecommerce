@@ -6,6 +6,10 @@
             <h1>Products Image Gallery</h1>
         </div>
 
+        <div class="mb-4">
+            <a href="{{route('admin.products.index')}}" class="btn btn-primary">Back</a>
+        </div>
+
         <div class="section-body">
 
             <div class="row">
