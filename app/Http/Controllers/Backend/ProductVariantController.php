@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\DataTables\ProductVariantDataTable;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Models\ProductVariantItem;
 
 class ProductVariantController extends Controller
 {
@@ -92,8 +93,12 @@ class ProductVariantController extends Controller
     public function destroy(string $id)
     {
         $variant        =       ProductVariant::findOrFail($id);
+        // Before deleting parent variant checking if it contains sub items
+        $variant_item   =       ProductVariantItem::where('product_variant_id', $variant->id)->count();
+        if ($variant_item > 0) {
+            return response(['status' => 'error', 'message' => 'this item contains sub items delete sub items first!']);
+        }
         $variant->delete();
-
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 

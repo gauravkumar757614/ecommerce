@@ -99,7 +99,7 @@ class CategoryController extends Controller
         // Before deleting parent category checking if it had dependent sub categories
         $sub_category       =       SubCategory::where('category_id', $category->id)->count();
         if ($sub_category > 0) {
-            return response(['status' => 'error', 'message' => 'This item contain sub itmes delete sub itmes first!']);
+            return response(['status' => 'error', 'message' => 'This item contains sub itmes delete sub itmes first!']);
         }
 
         $category->delete();

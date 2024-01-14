@@ -8,6 +8,8 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
 use App\Models\Product;
+use App\Models\ProductImageGallery;
+use App\Models\ProductVariant;
 use App\Models\SubCategory;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
@@ -165,8 +167,41 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product                    =       Product::findOrFail($id);
+
+        // Deleting image of the product
+        $this->deleteImage($product->thumb_image);
+
+        // Before deleting product, deleting its dependent product image gallery items
+        $product_image_gallery      =       ProductImageGallery::where('product_id', $product->id)->get();
+        foreach ($product_image_gallery as $product_images) {
+            $this->deleteImage($product_images->image);
+            $product_images->delete();
+        }
+
+        // Deleting product variants before product
+        $variants                    =       ProductVariant::where('product_id', $product->id)->get();
+        foreach ($variants as $variant) {
+            $variant->productVariantItems()->delete();
+            $variant->delete();
+        }
+
+        // Finally deleting the product
+        $product->delete();
+        return response(['status' => 'success', 'message' => 'deleted successfully!']);
     }
+
+    /**
+     * Change status of specific product in storage
+     */
+    public function changeStatus(Request $request)
+    {
+        $product               =       Product::findOrFail($request->id);
+        $product->status       =       $request->status == 'true' ? 1 : 0;
+        $product->save();
+        return response(['message' => 'status has benn changed successfully!']);
+    }
+
 
     /**
      * Fetching sub categories for selected main category from storage
