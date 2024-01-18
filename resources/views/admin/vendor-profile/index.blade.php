@@ -37,6 +37,14 @@
                                 </div>
                                 {{-- Image Field End --}}
 
+                                {{-- Shop Name Field --}}
+                                <div class="form-group wsus_input">
+                                    <label for="">Shop Name</label>
+                                    <input type="text" class="form-control" name="shop_name"
+                                        value="{{ $profile->shop_name }}">
+                                </div>
+                                {{-- Shop Name Field End --}}
+
                                 {{-- Phone Field --}}
                                 <div class="form-group">
                                     <label for="">Phone</label>

@@ -1,11 +1,11 @@
-@extends('vendor.dashboard.layouts.master')
+@extends('vendor.layouts.master')
 
 @section('content')
     <section id="wsus__dashboard">
         <div class="container-fluid">
 
             {{-- Sidebar --}}
-            @include('vendor.dashboard.layouts.sidebar');
+            @include('vendor.layouts.sidebar');
             {{-- Sidebar End --}}
 
             <div class="row">

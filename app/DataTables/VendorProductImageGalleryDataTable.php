@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class ProductImageGalleryDataTable extends DataTable
+class VendorProductImageGalleryDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,13 +23,13 @@ class ProductImageGalleryDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $deleteBtn     =   "<a href='" . route('admin.products-image-gallery.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'>
-                <i class='fas fa-user-times'></i></a>";
+                $deleteBtn     =   "<a href='" . route('vendor.products-image-gallery.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'>
+            <i class='fas fa-user-times'></i></a>";
 
                 return  $deleteBtn;
             })
             ->addColumn('images', function ($query) {
-                return $img     =   "<img src='" . asset($query->image) . "' width='200px' ></img>";
+                return $img     =   "<img src='" . asset($query->image) . "' width='100px' ></img>";
             })
             ->rawColumns(['images', 'action'])
             ->setRowId('id');
@@ -49,7 +49,7 @@ class ProductImageGalleryDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('productimagegallery-table')
+            ->setTableId('vendorproductimagegallery-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -71,7 +71,6 @@ class ProductImageGalleryDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-
             Column::make('id'),
             Column::make('images'),
 
@@ -89,6 +88,6 @@ class ProductImageGalleryDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'ProductImageGallery_' . date('YmdHis');
+        return 'VendorProductImageGallery_' . date('YmdHis');
     }
 }
