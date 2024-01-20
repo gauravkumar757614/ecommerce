@@ -34,26 +34,6 @@ class VendorProductDataTable extends DataTable
                  <i class='fas fa-user-times'></i></a>";
 
                 // More custom buttons
-                // $settings      =    '<div class="dropdown dropleft d-inline ml-1">
-                //                         <button class="btn btn-primary dropdown-toggle"
-                //                                 type="button" id="dropdownMenuButton2"
-                //                                 data-toggle="dropdown" aria-haspopup="true"
-                //                                 aria-expanded="false">
-
-                //                                 <i class="fas fa-cog"></i>
-
-                //                         </button>
-
-                //                         <div class="dropdown-menu">
-
-                //                         <a class="dropdown-item has-icon" href="' . route("admin.products-image-gallery.index", ['product' => $query->id]) . '"><i class="far fa-heart"></i> Images Gallery </a>
-                //                         <a class="dropdown-item has-icon" href="' . route("admin.products-variant.index", ['product' => $query->id]) . '"><i class="far fa-file"></i> Variant </a>
-                //                         </div>
-
-                //                     </div>';
-                // <li>
-                // <a class="dropdown-item" href="' . route("vendor.products-variant.index", ['product' => $query->id]) . '"> Variant </a>
-                // </li>
                 $settings       =   '<div class="btn-group dropstart" style="margin-left:4px">
                                         <button type="button" class="btn btn-secondary dropdown-toggle"
                                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -61,9 +41,12 @@ class VendorProductDataTable extends DataTable
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li>
-                                            <a class="dropdown-item" href="' . route("vendor.products-image-gallery.index", ['product' => $query->id]) . '"> Images Gallery </a>
+                                                <a class="dropdown-item" href="' . route("vendor.products-image-gallery.index", ['product' => $query->id]) . '"> Images Gallery </a>
                                             </li>
 
+                                            <li>
+                                                <a class="dropdown-item" href="' . route("vendor.products-variant.index", ['product' => $query->id]) . '"> Variant </a>
+                                            </li>
                                         </ul>
                                     </div>';
 
@@ -92,29 +75,38 @@ class VendorProductDataTable extends DataTable
                 }
             })
 
+            // Is approved
+            ->addColumn('approved', function ($query) {
+                if ($query->is_approved == 1) {
+                    return "<i class='badge bg-success'> Approved </i>";
+                } else {
+                    return "<i class='badge bg-warning'> Pending </i>";
+                }
+            })
+
             // Custom icon column
             ->addColumn('type', function ($query) {
                 switch ($query->product_type) {
                     case 'new_arrival':
-                        return "<i class='badge bg-dark'>'" . $query->product_type . "'</i>";
+                        return "<i class='badge bg-success'>'" . $query->product_type . "'</i>";
                         break;
                     case 'featured_product':
-                        return "<i class='badge bg-success'>'" . $query->product_type . "'</i>";
+                        return "<i class='badge bg-warning'>'" . $query->product_type . "'</i>";
                         break;
                     case 'top_product':
                         return "<i class='badge bg-info'>'" . $query->product_type . "'</i>";
                         break;
                     case 'best_product':
-                        return "<i class='badge bg-warning'>'" . $query->product_type . "'</i>";
+                        return "<i class='badge bg-danger'>'" . $query->product_type . "'</i>";
                         break;
 
                     default:
-                        return "<i class='badge bg-success'></i>";
+                        return "<i class='badge bg-dark'></i>";
                         break;
                 }
             })
 
-            ->rawColumns(['action', 'image', 'status', 'type'])
+            ->rawColumns(['action', 'image', 'status', 'type', 'approved'])
             ->setRowId('id');
     }
 
@@ -159,6 +151,7 @@ class VendorProductDataTable extends DataTable
             Column::make('image'),
             Column::make('name'),
             Column::make('price'),
+            Column::make('approved'),
             Column::make('type')->width(150),
             Column::make('status'),
 

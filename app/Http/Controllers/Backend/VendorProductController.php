@@ -178,6 +178,9 @@ class VendorProductController extends Controller
     {
         $product                    =       Product::findOrFail($id);
 
+        if ($product->vendor_id !== Auth::user()->vendor->id) {
+            abort(404);
+        }
         // Deleting image of the product
         $this->deleteImage($product->thumb_image);
 

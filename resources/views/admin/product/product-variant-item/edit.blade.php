@@ -14,7 +14,7 @@
                             <h4>Edit Variant Item</h4>
                         </div>
                         <div class="card-body">
-                            {{-- Create Category Form --}}
+                            {{-- Update Product Variant Item Form --}}
                             <form action="{{ route('admin.products-variant-item.update', $variant_item->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
@@ -71,7 +71,7 @@
                                 <button type="submit" class="btn btn-primary">Update</button>
                                 {{-- Submit Button End --}}
                             </form>
-                            {{-- Create Category Form End --}}
+                            {{-- Product Product Variant Item Form End --}}
                         </div>
                     </div>
                 </div>

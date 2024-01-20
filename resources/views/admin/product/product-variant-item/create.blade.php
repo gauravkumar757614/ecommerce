@@ -14,7 +14,7 @@
                             <h4>Create Variant Item</h4>
                         </div>
                         <div class="card-body">
-                            {{-- Create Category Form --}}
+                            {{-- Create Product Variant Item Form --}}
                             <form action="{{ route('admin.products-variant-item.store') }}" method="POST">
                                 @csrf
                                 {{-- Product Id Hidden Field --}}
@@ -77,7 +77,7 @@
                                 <button type="submit" class="btn btn-primary">Create</button>
                                 {{-- Submit Button End --}}
                             </form>
-                            {{-- Create Category Form End --}}
+                            {{-- Create Product Variant Item Form End --}}
                         </div>
                     </div>
                 </div>

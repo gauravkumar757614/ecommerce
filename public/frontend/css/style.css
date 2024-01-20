@@ -9455,11 +9455,17 @@ a:not([href]):not([class]):hover {
     margin-bottom: 10px;
 }
 
-#flexSwitchCheckDefault{
+#flexSwitchCheckDefault {
     height: 20px !important;
     width: 50px !important;
 }
 
-.delete-item{
+.delete-item {
     margin-left: 4px !important;
+}
+
+.btn-space-left {
+    margin-left: 5px;
+    color: #fff;
+    font-size: 11px;
 }
