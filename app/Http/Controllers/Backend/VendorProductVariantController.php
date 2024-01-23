@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\ProductVariantItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VendorProductVariantController extends Controller
 {
@@ -17,6 +18,9 @@ class VendorProductVariantController extends Controller
     public function index(Request $request, VendorProductVariantDataTable $dataTable)
     {
         $product        =       Product::findOrFail($request->product);
+        if ($product->vendor_id !== Auth::user()->vendor->id) {
+            abort(404);
+        }
         return $dataTable->render('vendor.product.product-variant.index', compact('product'));
     }
 
@@ -64,6 +68,9 @@ class VendorProductVariantController extends Controller
     public function edit(Request $request, string $id)
     {
         $variant        =       ProductVariant::findOrFail($id);
+        if ($variant->product->vendor_id !== Auth::user()->vendor->id) {
+            abort(404);
+        }
         return view('vendor.product.product-variant.edit', compact('variant'));
     }
 
@@ -78,6 +85,11 @@ class VendorProductVariantController extends Controller
         ]);
 
         $variant                =   ProductVariant::findOrFail($id);
+
+        if ($variant->product->vendor_id !== Auth::user()->vendor->id) {
+            abort(404);
+        }
+
         $variant->name          =   $request->name;
         $variant->status        =   $request->status;
 
@@ -93,6 +105,11 @@ class VendorProductVariantController extends Controller
     public function destroy(string $id)
     {
         $variant        =       ProductVariant::findOrFail($id);
+
+        if ($variant->product->vendor_id !== Auth::user()->vendor->id) {
+            abort(404);
+        }
+
         // Before deleting parent variant checking if it contains sub items
         $variant_item   =       ProductVariantItem::where('product_variant_id', $variant->id)->count();
         if ($variant_item > 0) {

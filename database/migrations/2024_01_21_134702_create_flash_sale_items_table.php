@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('flash_sales', function (Blueprint $table) {
+        Schema::create('flash_sale_items', function (Blueprint $table) {
             $table->id();
-            $table->date('end_date');
+            $table->integer('product_id');
+            $table->integer('flash_sale_id');
+            $table->boolean('show_at_home');
+            $table->boolean('status');
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('flash_sales');
+        Schema::dropIfExists('flash_sale_items');
     }
 };
