@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\VendorController;
 use App\Http\Controllers\Frontend\FlashSaleController;
+use App\Http\Controllers\Frontend\FrontendProductController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\ProfileController;
@@ -44,11 +45,14 @@ require __DIR__ . '/auth.php';
 Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
 //======================================================================================================
 
-
-/**
- * Flash sale routes
- */
+//  Flash sale routes
 Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sale.index');
+
+//  Product detials routes
+Route::get('product-details/{slug}', [FrontendProductController::class, 'showDetails'])->name('product-details');
+
+
+
 
 
 /**

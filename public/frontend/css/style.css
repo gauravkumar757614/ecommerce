@@ -9524,3 +9524,6 @@ a:not([href]):not([class]):hover {
     margin-right: 10px;
 }
 
+/* #sticky_pro_zoom {
+    z-index: 9999 !important;
+} */
