@@ -75,13 +75,22 @@
             {{-- Manage Product End --}}
 
             {{-- Manage Vendor --}}
-            <li class="dropdown {{ setActive(['admin.vendor-profile.*', 'admin.flash-sale.*']) }}">
+            <li
+                class="dropdown {{ setActive(['admin.vendor-profile.*', 'admin.flash-sale.*', 'admin.coupons.*', 'admin.shipping-rules.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Ecommerce</span></a>
                 <ul class="dropdown-menu">
 
                     <li class="{{ setActive(['admin.vendor-profile.*']) }}"><a class="nav-link"
                             href="{{ route('admin.vendor-profile.index') }}">Vendor Profiles</a>
+                    </li>
+
+                    <li class="{{ setActive(['admin.coupons.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.coupons.index') }}">Coupons</a>
+                    </li>
+
+                    <li class="{{ setActive(['admin.shipping-rules.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.shipping-rules.index') }}">Shipping Rule</a>
                     </li>
 
                     <li class="{{ setActive(['admin.flash-sale.*']) }}"><a class="nav-link"
@@ -102,6 +111,8 @@
                 </ul>
             </li>
             {{-- Manage Website End --}}
+            <li><a class="nav-link" href="{{ route('admin.settings.index') }}"><i class="far fa-square"></i>
+                    <span>Settings</span></a></li>
 
 
 

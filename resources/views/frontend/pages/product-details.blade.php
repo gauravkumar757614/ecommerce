@@ -203,9 +203,10 @@
 
                             {{-- Checking if the product has discount using helper function --}}
                             @if (checkDiscount($product))
-                                <h4>${{ $product->offer_price }} <del>${{ $product->price }}</del></h4>
+                                <h4> {{ $settings->currency_icon }} {{ $product->offer_price }} <del>
+                                        {{ $settings->currency_icon }} {{ $product->price }}</del></h4>
                             @else
-                                <h4>${{ $product->price }}</h4>
+                                <h4> {{ $settings->currency_icon }} {{ $product->price }}</h4>
                             @endif
 
                             <p class="review">
@@ -704,7 +705,8 @@
                                 <span>(17 review)</span>
                             </p>
                             <a class="wsus__pro_name" href="#">men's casual fashion watch</a>
-                            <p class="wsus__price">$159 <del>$200</del></p>
+                            <p class="wsus__price"> {{ $settings->currency_icon }} 159 <del>
+                                    {{ $settings->currency_icon }} 200</del></p>
                             <a class="add_cart" href="#">add to cart</a>
                         </div>
                     </div>
