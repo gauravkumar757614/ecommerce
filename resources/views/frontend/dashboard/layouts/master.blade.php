@@ -9,7 +9,9 @@
     {{-- Adding csrf token for ajax --}}
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <title>One Shop || e-Commerce HTML Template</title>
+    <title>
+        @yield('title')
+    </title>
     <link rel="icon" type="image/png" href="{{ asset('frontend/images/favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}">

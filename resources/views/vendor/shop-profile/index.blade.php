@@ -1,5 +1,10 @@
 @extends('vendor.layouts.master');
 
+
+@section('title')
+    {{ $settings->site_name }} || Shop-Profile
+@endsection
+
 @section('content')
     {{-- DASHBOARD START --}}
     <section id="wsus__dashboard">
