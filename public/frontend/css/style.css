@@ -9524,6 +9524,16 @@ a:not([href]):not([class]):hover {
     margin-right: 10px;
 }
 
-/* #sticky_pro_zoom {
-    z-index: 9999 !important;
-} */
+.product_qty_wrapper {
+    display: flex;
+}
+.product_qty_wrapper > .product_qty {
+    width: 45px;
+    height: 36px;
+    padding: 5px;
+    text-align: center;
+}
+
+.wsus__cart_list .wsus__pro_name {
+    width: 285px !important;
+}
