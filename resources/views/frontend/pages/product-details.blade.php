@@ -203,7 +203,15 @@
                     <div class="col-xl-5 col-md-7 col-lg-7">
                         <div class="wsus__pro_details_text">
                             <a class="title" href="javascript:;">{{ $product->name }}</a>
-                            <p class="wsus__stock_area"><span class="in_stock">in stock</span> (167 item)</p>
+
+                            {{-- Displaying Quantity on condition --}}
+                            @if ($product->qty > 0)
+                                <p class="wsus__stock_area"><span class="in_stock">in stock</span> ({{ $product->qty }}
+                                    item)</p>
+                            @elseif ($product->qty === 0)
+                                <p class="wsus__stock_area"><span class="in_stock">stock out</span> ({{ $product->qty }}
+                                    item)</p>
+                            @endif
 
                             {{-- Checking if the product has discount using helper function --}}
                             @if (checkDiscount($product))
@@ -229,18 +237,27 @@
 
                                         {{-- Hidden field of product Id --}}
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        @foreach ($product->variants as $variant)
-                                            <div class="col-xl-6 col-sm-6">
-                                                <h5 class="mb-2">{{ $variant->name }}:</h5>
-                                                <select class="select_2" name="variant_items[]">
 
-                                                    @foreach ($variant->productVariantItems as $variantItem)
-                                                        <option value="{{ $variantItem->id }}"
-                                                            {{ $variantItem->is_default == 1 ? 'selected' : '' }}>
-                                                            {{ $variantItem->name }} (${{ $variantItem->price }})</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                        {{-- Displaying variant that have status true --}}
+
+                                        @foreach ($product->variants as $variant)
+                                            @if ($variant->status != 0)
+                                                <div class="col-xl-6 col-sm-6">
+                                                    <h5 class="mb-2">{{ $variant->name }}:</h5>
+                                                    <select class="select_2" name="variant_items[]">
+
+                                                        {{-- Displaying variants items that have status true --}}
+                                                        @foreach ($variant->productVariantItems as $variantItem)
+                                                            @if ($variantItem->status != 0)
+                                                                <option value="{{ $variantItem->id }}"
+                                                                    {{ $variantItem->is_default == 1 ? 'selected' : '' }}>
+                                                                    {{ $variantItem->name }} (${{ $variantItem->price }})
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            @endif
                                         @endforeach
 
                                     </div>
@@ -268,6 +285,8 @@
 
                         </div>
                     </div>
+
+
                     <div class="col-xl-3 col-md-12 mt-md-5 mt-lg-0">
                         <div class="wsus_pro_det_sidebar" id="sticky_sidebar">
                             <ul>
@@ -380,6 +399,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="tab-pane fade" id="pills-contact2" role="tabpanel"
                                     aria-labelledby="pills-contact-tab2">
                                     <div class="wsus__pro_det_review">
@@ -727,56 +747,3 @@
     </section> --}}
     {{-- RELATED PRODUCT END --}}
 @endsection
-
-@push('scripts')
-    <script>
-        $(document).ready(function() {
-
-            // Adding csrf token
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            // Add product to cart
-            $('.shopping-cart-form').on('submit', function(e) {
-                e.preventDefault();
-                let formData = $(this).serialize();
-                // console.log(formData);
-                $.ajax({
-                    method: 'POST',
-                    data: formData,
-                    url: "{{ route('add-to-cart') }}",
-
-                    success: function(data) {
-                        if (data.status == 'success') {
-                            getCartCount();
-                            toastr.success(data.message);
-                        }
-                    },
-
-                    error: function(data) {
-
-                    }
-                })
-            })
-
-            function getCartCount() {
-                $.ajax({
-                    method: 'GET',
-                    url: "{{ route('cart-count') }}",
-
-                    success: function(data) {
-                        $('#cart-count').text(data);
-                    },
-
-                    error: function(data) {
-
-                    }
-                })
-            }
-
-        })
-    </script>
-@endpush

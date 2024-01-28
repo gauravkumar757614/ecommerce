@@ -17,6 +17,14 @@ class CartController extends Controller
     public function addToCart(Request $request)
     {
         $product        =       Product::findOrFail($request->product_id);
+
+        // Before adding product to cart checking the inventory for product quantity
+        if ($product->qty == 0) {
+            return response(['status' => 'error', 'message' => 'Product out of stock']);
+        } else if ($product->qty < $request->qty) {
+            return response(['status' => 'error', 'message' => 'Request quantity is not available']);
+        }
+
         $variants       =       [];
         $variantTotalAmount =   0;
 
@@ -67,6 +75,16 @@ class CartController extends Controller
      */
     public function updateQuantity(Request $request)
     {
+        $productId      =       Cart::get($request->rowId)->id;
+        $product        =       Product::findOrFail($productId);
+        // dd($product);
+        // Before adding product to cart checking the inventory for product quantity
+        if ($product->qty == 0) {
+            return response(['status' => 'error', 'message' => 'Product out of stock']);
+        } else if ($product->qty < $request->qty) {
+            return response(['status' => 'error', 'message' => 'Request quantity is not available']);
+        }
+
         Cart::update($request->rowId, $request->quantity);
         $productTotal   =   $this->productTotal($request->rowId);
         return response([
@@ -82,6 +100,18 @@ class CartController extends Controller
     {
         $product        =       Cart::get($rowId);
         $total          =       ($product->price + $product->options->variants_total) * $product->qty;
+        return $total;
+    }
+
+    /**
+     * Get the total amount of all the product present in the cart
+     */
+    public function cartTotal()
+    {
+        $total      =        0;
+        foreach (Cart::content() as $product) {
+            $total      +=      $this->productTotal($product->rowId);
+        }
         return $total;
     }
 
@@ -109,5 +139,22 @@ class CartController extends Controller
     public function getCartCount()
     {
         return Cart::content()->count();
+    }
+
+    /**
+     * Get all products in sidebar cart
+     */
+    public function getCartProducts()
+    {
+        return Cart::content();
+    }
+
+    /**
+     * Remove particular product from sidebar
+     */
+    public function removeSidebarProduct(Request $request)
+    {
+        Cart::remove($request->rowId);
+        return response(['statis' => 'success', 'message' => 'Product removed successfully!']);
     }
 }

@@ -59,7 +59,9 @@ Route::post('cart/update-quantity', [CartController::class, 'updateQuantity'])->
 Route::get('clear-cart', [CartController::class, 'clearCart'])->name('clear.cart');
 Route::get('cart/remove-product/{rowId}', [CartController::class, 'removeProduct'])->name('cart.remove-product');
 Route::get('cart-count', [CartController::class, 'getCartCount'])->name('cart-count');
-
+Route::get('cart-products', [CartController::class, 'getCartProducts'])->name('cart-products');
+Route::post('cart/remove-sidebar-products', [CartController::class, 'removeSidebarProduct'])->name('cart/remove-sidebar-products');
+Route::get('cart/sidebar-products-total', [CartController::class, 'cartTotal'])->name('cart.sidebar-products-total');
 
 /**
  * This is custom user related routes

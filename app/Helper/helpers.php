@@ -1,5 +1,6 @@
 <?php
 
+use Gloudemans\Shoppingcart\Facades\Cart;
 use PhpParser\Node\Expr\Cast\String_;
 
 /**
@@ -66,4 +67,16 @@ function productType(string $type): String
             return '';
             break;
     }
+}
+
+/**
+ * Get cart total amount
+ */
+function getCartTotal()
+{
+    $total      =        0;
+    foreach (Cart::content() as $product) {
+        $total      +=      ($product->price + $product->options->variants_total) * $product->qty;
+    }
+    return $total;
 }
