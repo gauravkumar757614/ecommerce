@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Frontend\CheckOutController;
+use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProductController;
@@ -10,6 +12,7 @@ use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +66,11 @@ Route::get('cart-products', [CartController::class, 'getCartProducts'])->name('c
 Route::post('cart/remove-sidebar-products', [CartController::class, 'removeSidebarProduct'])->name('cart/remove-sidebar-products');
 Route::get('cart/sidebar-products-total', [CartController::class, 'cartTotal'])->name('cart.sidebar-products-total');
 
+// Apply coupon route
+Route::get('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply-coupon');
+// Calculating the amount of coupon route
+Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->name('coupon-calculation');
+
 /**
  * This is custom user related routes
  */
@@ -74,4 +82,15 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // User address routes
     Route::resource('address', UserAddressController::class);
+    // Check out routes
+    Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout.index');
+    Route::post('checkout/address-create', [CheckOutController::class, 'createAddress'])->name('checkout.address-create');
+    Route::post('checkout/form-submit', [CheckOutController::class, 'checkoutFormSubmit'])->name('checkout.form-submit');
+
+    // Payment routes
+    Route::get('payment', [PaymentController::class, 'index'])->name('payment.index');
+    // Paypal routes
+    Route::get('paypal/payment', [PaymentController::class, 'payWithPaypal'])->name('paypal.payment');
+    Route::get('paypal/success', [PaymentController::class, 'paypalSuccess'])->name('paypal.success');
+    Route::get('paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
 });

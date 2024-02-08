@@ -64,7 +64,7 @@
                                         <option {{ $shippingRule->status == 1 ? 'selected' : '' }} value="1">Active
                                         </option>
 
-                                        <option {{ $shippingRule->status == 1 ? 'selected' : '' }} value="0">Inactive
+                                        <option {{ $shippingRule->status == 0 ? 'selected' : '' }} value="0">Inactive
                                         </option>
                                     </select>
                                 </div>

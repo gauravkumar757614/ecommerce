@@ -140,6 +140,8 @@
     {{-- Dynamic delete alert --}}
     <script>
         $(document).ready(function() {
+            // Select2 jquery initialization
+            $('.js-example-basic-single').select2();
             // Adding csrf token
             $.ajaxSetup({
                 headers: {

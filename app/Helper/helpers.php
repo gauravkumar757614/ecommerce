@@ -1,6 +1,7 @@
 <?php
 
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Session;
 use PhpParser\Node\Expr\Cast\String_;
 
 /**
@@ -70,7 +71,7 @@ function productType(string $type): String
 }
 
 /**
- * Get cart total amount
+ * Get cart sub total amount
  */
 function getCartTotal()
 {
@@ -79,4 +80,57 @@ function getCartTotal()
         $total      +=      ($product->price + $product->options->variants_total) * $product->qty;
     }
     return $total;
+}
+
+// After applying coupon or on checkout page following function will return the total payable amount
+function getTotalPayable()
+{
+    if (Session::has('coupon')) {
+        $coupon     =       Session::get('coupon');
+        $subTotal   =       getCartTotal();
+
+        if ($coupon['discount_type'] == 'amount') {
+            $total      =       $subTotal  - $coupon['discount'];
+            return $total;
+        } else if ($coupon['discount_type'] == 'percentage') {
+            $discount   =       $subTotal  - ($subTotal  * $coupon['discount'] / 100);
+            $total      =       $subTotal  - $discount;
+            return $total;
+        }
+    } else {
+        return getCartTotal();
+    }
+}
+
+// This function will return coupon amount
+function getCouponDiscount()
+{
+    if (Session::has('coupon')) {
+        $coupon     =       Session::get('coupon');
+        $subTotal   =       getCartTotal();
+        if ($coupon['discount_type'] == 'amount') {
+            return $coupon['discount'];
+        } else if ($coupon['discount_type'] == 'percentage') {
+            $discount   =       $subTotal  - ($subTotal  * $coupon['discount'] / 100);
+            return ceil($discount);
+        }
+    } else {
+        return 0;
+    }
+}
+
+// Get shipping fee from session as we have stored in the session all the details of the shipping
+function getShippingFee()
+{
+    if (Session::has('shipping_rule')) {
+        return Session::get('shipping_rule')['cost'];
+    } else {
+        return 0;
+    }
+}
+
+// Get the final payable amount the payment page
+function getFinalPayableAmount()
+{
+    return getTotalPayable() + getShippingFee();
 }
