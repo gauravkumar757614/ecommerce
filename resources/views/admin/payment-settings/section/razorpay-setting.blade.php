@@ -1,22 +1,14 @@
-<div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+<div class="tab-pane fade" id="list-razorpay" role="tabpanel" aria-labelledby="list-razorpay-list">
     <div class="card border">
         <div class="card-body">
-            <form action="{{ route('admin.paypal-setting.update', 1) }}" method="POST">
+            <form action="{{ route('admin.razorpay-setting.update', 1) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="form-group">
-                    <label for="">Paypal Status</label>
+                    <label for="">Razorpay status</label>
                     <select name="status" id="" class="form-control">
-                        <option {{ $paypal->status == 1 ? 'selected' : '' }} value="1">Enable</option>
-                        <option {{ $paypal->status == 0 ? 'selected' : '' }} value="0">Disable</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="">Account Mode</label>
-                    <select name="mode" id="" class="form-control">
-                        <option {{ $paypal->mode == 0 ? 'selected' : '' }} value="0">Sandbox</option>
-                        <option {{ $paypal->mode == 1 ? 'selected' : '' }} value="1">Live</option>
+                        <option {{ $razorpay->status == 1 ? 'selected' : '' }} value="1">Enable</option>
+                        <option {{ $razorpay->status == 0 ? 'selected' : '' }} value="0">Disable</option>
                     </select>
                 </div>
 
@@ -25,7 +17,7 @@
                     <select name="country_name" id="" class="form-control select2">
                         <option value="">Select</option>
                         @foreach (config('setting.country_list') as $country)
-                            <option {{ $paypal->country_name == $country ? 'selected' : '' }}
+                            <option {{ $razorpay->country_name == $country ? 'selected' : '' }}
                                 value="{{ $country }}">{{ $country }}</option>
                         @endforeach
                     </select>
@@ -36,7 +28,8 @@
                     <select name="currency_name" id="" class="form-control select2">
                         <option value="">Select</option>
                         @foreach (config('setting.currency_list') as $currency => $code)
-                            <option {{ $paypal->currency_name == $code ? 'selected' : '' }} value="{{ $code }}">
+                            <option {{ $razorpay->currency_name == $code ? 'selected' : '' }}
+                                value="{{ $code }}">
                                 {{ $currency }}</option>
                         @endforeach
                     </select>
@@ -45,17 +38,19 @@
                 <div class="form-group">
                     <label for="">Currency Rate (Per {{ $settings->currency_name }}) </label>
                     <input type="text" class="form-control" name="currency_rate"
-                        value="{{ $paypal->currency_rate }}">
+                        value="{{ $razorpay->currency_rate }}">
                 </div>
 
                 <div class="form-group">
-                    <label for="">Paypal Client Id </label>
-                    <input type="text" class="form-control" name="client_id" value="{{ $paypal->client_id }}">
+                    <label for="">Razorpay key </label>
+                    <input type="text" class="form-control" name="razorpay_key"
+                        value="{{ $razorpay->razorpay_key }}">
                 </div>
 
                 <div class="form-group">
-                    <label for=""> Paypal Secret Key </label>
-                    <input type="text" class="form-control" name="secret_key" value="{{ $paypal->secret_key }}">
+                    <label for=""> Razorpay Secret Key </label>
+                    <input type="text" class="form-control" name="razorpay_secret"
+                        value="{{ $razorpay->razorpay_secret_key }}">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update</button>

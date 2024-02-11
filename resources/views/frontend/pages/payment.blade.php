@@ -41,6 +41,10 @@
                                     data-bs-target="#v-pills-stripe" type="button" role="tab"
                                     aria-controls="v-pills-stripe" aria-selected="false">Stripe</button>
 
+                                <button class="nav-link common_btn" id="v-pills-profile-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-razorpay" type="button" role="tab"
+                                    aria-controls="v-pills-razorpay" aria-selected="false">Razorpay</button>
+
                             </div>
                         </div>
                     </div>
@@ -66,19 +70,13 @@
                             {{-- First payment card paypal end --}}
 
                             {{-- Second payment card stripe --}}
-                            <div class="tab-pane fade" id="v-pills-stripe" role="tabpanel"
-                                aria-labelledby="v-pills-profile-tab">
-                                <div class="row">
-                                    <div class="col-xl-12 m-auto">
-                                        <div class="wsus__payment_area">
-
-                                            <a class="nav-link common_btn text-center" href="">Pay with Stripe</a>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @include('frontend.pages.payment-gateway.stripe')
                             {{-- Second payment card stripe end --}}
+
+                            {{-- Third payment card razorpay --}}
+                            @include('frontend.pages.payment-gateway.razorpay');
+                            {{-- Third payment card razorpay end --}}
+
 
                         </div>
                     </div>

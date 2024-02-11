@@ -14,10 +14,12 @@ use App\Http\Controllers\Backend\ProductImageGalleryController;
 use App\Http\Controllers\Backend\ProductVariantController;
 use App\Http\Controllers\Backend\ProductVariantItemController;
 use App\Http\Controllers\Backend\ProfileController;
+use App\Http\Controllers\Backend\RazorpaySettingController;
 use App\Http\Controllers\Backend\SellerProductController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -110,3 +112,6 @@ Route::put('general-setting-update', [SettingController::class, 'generalSettingU
 // Payment setting route
 Route::get('payment-setting', [PaymentSettingController::class, 'index'])->name('payment-setting.index');
 Route::resource('paypal-setting', PaypalSettingController::class);
+Route::put('stripe-setting/{stripe_setting}', [StripeSettingController::class, 'update'])->name('stripe-setting.update');
+Route::put('razor-setting/{razor_setting}', [RazorpaySettingController::class, 'update'])->name('razorpay-setting.update');
+
