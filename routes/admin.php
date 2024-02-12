@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\FlashSaleController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaymentSettingController;
 use App\Http\Controllers\Backend\PaypalSettingController;
 use App\Http\Controllers\Backend\ProductController;
@@ -105,6 +106,10 @@ Route::put('shipping-rules/change-status', [ShippingRuleController::class, 'chan
 // Coupons Routes
 Route::resource('shipping-rules', ShippingRuleController::class);
 
+// Orders routes
+Route::get('order-status', [OrderController::class, 'changeOrderStatus'])->name('order.status');
+Route::resource('order', OrderController::class);
+
 // General settings routes
 Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
 Route::put('general-setting-update', [SettingController::class, 'generalSettingUpdate'])->name('general-setting-update');
@@ -114,4 +119,3 @@ Route::get('payment-setting', [PaymentSettingController::class, 'index'])->name(
 Route::resource('paypal-setting', PaypalSettingController::class);
 Route::put('stripe-setting/{stripe_setting}', [StripeSettingController::class, 'update'])->name('stripe-setting.update');
 Route::put('razor-setting/{razor_setting}', [RazorpaySettingController::class, 'update'])->name('razorpay-setting.update');
-
