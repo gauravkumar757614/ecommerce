@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class OrderDataTable extends DataTable
+class ShippedOrderDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -32,7 +32,7 @@ class OrderDataTable extends DataTable
                 $deleteBtn     =   "<a href='" . route('admin.order.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'>
                  <i class='fas fa-user-times'></i></a>";
 
-                return $showBtn . $deleteBtn;
+                return $showBtn . $deleteBtn ;
             })
             // Customer name
             ->addColumn('customer', function ($query) {
@@ -99,7 +99,7 @@ class OrderDataTable extends DataTable
      */
     public function query(Order $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->where('order_status', 'shipped')->newQuery();
     }
 
     /**
@@ -108,7 +108,7 @@ class OrderDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('order-table')
+            ->setTableId('pendingorder-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -130,7 +130,6 @@ class OrderDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-
             Column::make('id'),
             Column::make('invoice_id'),
             Column::make('customer'),
@@ -146,7 +145,6 @@ class OrderDataTable extends DataTable
                 ->printable(false)
                 ->width(200)
                 ->addClass('text-center'),
-
         ];
     }
 
@@ -155,6 +153,6 @@ class OrderDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Order_' . date('YmdHis');
+        return 'PendingOrder_' . date('YmdHis');
     }
 }

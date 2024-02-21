@@ -22,6 +22,7 @@ use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 // Profile routes
@@ -107,8 +108,18 @@ Route::put('shipping-rules/change-status', [ShippingRuleController::class, 'chan
 Route::resource('shipping-rules', ShippingRuleController::class);
 
 // Orders routes
+Route::get('payment-status', [OrderController::class, 'changePaymentStatus'])->name('payment.status');
 Route::get('order-status', [OrderController::class, 'changeOrderStatus'])->name('order.status');
+Route::get('pending-order', [OrderController::class, 'pendingOrder'])->name('pending.order');
+Route::get('order-processed', [OrderController::class, 'orderProcessed'])->name('order.processed');
+Route::get('order-dropped-off', [OrderController::class, 'orderDroppedOff'])->name('order.dropped-off');
+Route::get('order-shipped', [OrderController::class, 'orderShipped'])->name('order.shipped');
+Route::get('order-out-for-delivery', [OrderController::class, 'orderOutForDelivery'])->name('order.out-for-delivery');
+Route::get('order-delivered', [OrderController::class, 'orderDelivered'])->name('order.delivered');
+Route::get('order-canceled', [OrderController::class, 'orderCanceled'])->name('order.canceled');
 Route::resource('order', OrderController::class);
+// Transactions of order routes
+Route::get('transaction', [TransactionController::class, 'index'])->name('transaction.index');
 
 // General settings routes
 Route::get('settings', [SettingController::class, 'index'])->name('settings.index');

@@ -120,6 +120,24 @@
                             </div>
                             <div class="row mt-4">
                                 <div class="col-lg-8">
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="">Payment status</label>
+                                            <select class="form-control" name="payment_status"
+                                                data-id="{{ $order->id }}" id="payment_status">
+
+                                                <option {{ $order->payment_status == 0 ? 'selected' : '' }} value="0">
+                                                    Pending
+                                                </option>
+
+                                                <option {{ $order->payment_status == 1 ? 'selected' : '' }} value="1">
+                                                    Completed
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Order status</label>
@@ -167,13 +185,8 @@
                 </div>
                 <hr>
                 <div class="text-md-right">
-                    <div class="float-lg-left mb-lg-0 mb-3">
-                        <button class="btn btn-primary btn-icon icon-left"><i class="fas fa-credit-card"></i>
-                            Process Payment</button>
-                        <button class="btn btn-danger btn-icon icon-left"><i class="fas fa-times"></i>
-                            Cancel</button>
-                    </div>
-                    <button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
+                    <button class="btn btn-warning btn-icon icon-left print_invoice"><i class="fas fa-print"></i>
+                        Print</button>
                 </div>
             </div>
         </div>
@@ -211,6 +224,39 @@
                     }
                 })
             })
+
+            $('#payment_status').on('change', function() {
+                let id = $(this).data('id');
+                let status = $(this).val();
+                $.ajax({
+                    method: 'GET',
+                    url: "{{ route('admin.payment.status') }}",
+                    data: {
+                        status: status,
+                        id: id
+                    },
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            toastr.success(data.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+
+                    }
+                })
+            })
+
+            $('.print_invoice').on('click', function() {
+                let printBody = $('.invoice-print');
+                let originalContent = $('body').html();
+
+                $('body').html(printBody.html());
+                window.print();
+
+                $('body').html(originalContent);
+            })
+
+
         })
     </script>
 @endpush
