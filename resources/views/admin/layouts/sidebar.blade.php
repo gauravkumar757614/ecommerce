@@ -58,7 +58,9 @@
             {{-- Orders dropdown end --}}
 
             {{-- Transactions --}}
-            <li class="{{ setActive(['admin.transaction.*']) }}"><a class="nav-link {{ setActive(['admin.transaction.*']) }}" href="{{ route('admin.transaction.index') }}"><i class="far fa-square"></i>
+            <li class="{{ setActive(['admin.transaction.*']) }}"><a
+                    class="nav-link {{ setActive(['admin.transaction.*']) }}"
+                    href="{{ route('admin.transaction.index') }}"><i class="far fa-square"></i>
                     <span>Transaction</span></a></li>
             {{-- Transactions end --}}
 
@@ -145,20 +147,26 @@
             {{-- Manage Vendor End --}}
 
             {{-- Manage Website --}}
-            <li class="dropdown {{ setActive(['admin.slider.*']) }}">
+            <li
+                class="dropdown
+                                {{ setActive(['admin.slider.*', 'admin.home-page-setting.*']) }}">
+
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fas fa-columns"></i>
                     <span>Manage Website</span></a>
                 <ul class="dropdown-menu">
+
                     <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link"
                             href="{{ route('admin.slider.index') }}">Slider</a></li>
-                </ul>
+                    <li class="{{ setActive(['admin.home-page-setting.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.home-page-setting.index') }}">Home Page Settings</a></li>
+
+                        </ul>
             </li>
             {{-- Manage Website End --}}
-            <li class="{{ setActive(['admin.settings.*']) }}"><a class="nav-link " href="{{ route('admin.settings.index') }}"><i class="far fa-square"></i>
+            <li class="{{ setActive(['admin.settings.*']) }}"><a class="nav-link "
+                    href="{{ route('admin.settings.index') }}"><i class="far fa-square"></i>
                     <span>Settings</span></a></li>
-
-
 
 
             {{-- For later Use --}}
