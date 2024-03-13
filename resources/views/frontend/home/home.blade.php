@@ -17,12 +17,12 @@
 
 
     {{-- MONTHLY TOP PRODUCT START --}}
-    {{-- @include('frontend.home.sections.top-category-product'); --}}
+    @include('frontend.home.sections.top-category-product');
     {{-- MONTHLY TOP PRODUCT END --}}
 
 
     {{-- BRAND SLIDER START --}}
-    {{-- @include('frontend.home.sections.brand-slider'); --}}
+    @include('frontend.home.sections.brand-slider');
     {{-- BRAND SLIDER END --}}
 
 

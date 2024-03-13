@@ -166,6 +166,12 @@
         @endif
     </script>
 
+    <script>
+        $(document).ready(function() {
+            $('.auto_click').click();
+        })
+    </script>
+
     {{-- All custom scripts related to cart functionality --}}
     @include('frontend.layouts.scripts');
     @stack('scripts')
