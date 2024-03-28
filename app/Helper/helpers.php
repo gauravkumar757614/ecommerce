@@ -41,7 +41,7 @@ function calculateDiscount($originalPrice, $discountPrice)
 {
     $discountAmount     =   $originalPrice - $discountPrice;
     $percentage         =   ($discountAmount / $originalPrice) * 100;
-    return ceil($percentage);
+    return round($percentage);
 }
 
 /**

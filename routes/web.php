@@ -10,6 +10,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserOrderController;
+use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
@@ -53,8 +54,10 @@ Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login
 //  Flash sale routes
 Route::get('flash-sale', [FlashSaleController::class, 'index'])->name('flash-sale.index');
 
-//  Product detials routes
+//  Products routes
+Route::get('products', [FrontendProductController::class, 'productsIndex'])->name('products.index');
 Route::get('product-details/{slug}', [FrontendProductController::class, 'showDetails'])->name('product-details');
+Route::get('change-product-list-view', [FrontendProductController::class, 'changeListView'])->name('change-product-list-view');
 
 //  Cart routes
 Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
@@ -87,6 +90,11 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     // Order routes
     Route::get('orders', [UserOrderController::class, 'index'])->name('orders.index');
     Route::get('orders/show/{id}', [UserOrderController::class, 'show'])->name('orders.show');
+
+    // Wish list routes
+    Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+    Route::post('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
+    Route::delete('wishlist/remove-product/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
 
     // Check out routes
     Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout.index');

@@ -150,5 +150,29 @@
             })
         }
 
+        // Add product to wish list
+        $('.add_to_wishlist').on('click', function(e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+
+            $.ajax({
+                method: 'POST',
+                url: "{{ route('user.wishlist.store') }}",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    if (data.status == 'success') {
+                        $('#wishlist_count').text(data.count);
+                        toastr.success(data.message);
+                    } else if (data.status == 'error') {
+                        toastr.error(data.message);
+                    }
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            })
+        })
     })
 </script>
