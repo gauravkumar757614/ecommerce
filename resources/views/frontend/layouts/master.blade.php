@@ -173,7 +173,7 @@
     </script>
 
     {{-- All custom scripts related to cart functionality --}}
-    @include('frontend.layouts.scripts');
+    @include('frontend.layouts.scripts')
     @stack('scripts')
 </body>
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProductController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\NewsLetterController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserOrderController;
@@ -74,6 +75,11 @@ Route::get('cart/sidebar-products-total', [CartController::class, 'cartTotal'])-
 Route::get('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply-coupon');
 // Calculating the amount of coupon route
 Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->name('coupon-calculation');
+
+// Newsletter routes
+Route::post('news-letters-request', [NewsLetterController::class, 'newsLettersRequest'])->name('news-letters-request');
+Route::get('news-letters-verification/{token}', [NewsLetterController::class, 'newsLettersEmailVerify'])->name('news-letters-verification');
+
 
 /**
  * This is custom user related routes

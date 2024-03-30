@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\EmailConfiguration;
 use App\Models\GeneralSetting;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,8 @@ class SettingController extends Controller
     public function index()
     {
         $generalSetting        =       GeneralSetting::first();
-        return view('admin.setting.index', compact('generalSetting'));
+        $emailSetting        =       EmailConfiguration::first();
+        return view('admin.setting.index', compact('generalSetting', 'emailSetting'));
     }
 
     /**
@@ -39,6 +41,36 @@ class SettingController extends Controller
                 'time_zone'     =>      $request->timezone,
             ]
 
+        );
+
+        toastr('Updated Successfully!', 'success');
+        return redirect()->back();
+    }
+
+    /**
+     * Update email configuration in the storage
+     */
+    public function emailConfiguration(Request $request)
+    {
+        $request->validate([
+            'email'             =>      ['required', 'email', 'max:200'],
+            'host'              =>      ['required', 'max:200'],
+            'username'          =>      ['required', 'max:200'],
+            'password'          =>      ['required', 'max:200'],
+            'port'              =>      ['required', 'max:200'],
+            'encryption'        =>      ['required', 'max:200'],
+        ]);
+
+        EmailConfiguration::updateOrCreate(
+            ['id' => 1],
+            [
+                'email'         =>      $request->email,
+                'host'          =>      $request->host,
+                'username'      =>      $request->username,
+                'password'      =>      $request->password,
+                'port'          =>      $request->port,
+                'encryption'    =>      $request->encryption,
+            ]
         );
 
         toastr('Updated Successfully!', 'success');

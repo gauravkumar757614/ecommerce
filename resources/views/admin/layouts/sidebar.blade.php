@@ -161,12 +161,70 @@
                     <li class="{{ setActive(['admin.home-page-setting.*']) }}"><a class="nav-link"
                             href="{{ route('admin.home-page-setting.index') }}">Home Page Settings</a></li>
 
-                        </ul>
+                </ul>
             </li>
             {{-- Manage Website End --}}
+
+            {{-- Manage Footer --}}
+            <li
+                class="dropdown
+                                {{ setActive([
+                                    'admin.footer-info.*',
+                                    'admin.footer-socials.*',
+                                    'admin.footer-grid-two.*',
+                                    'admin.footer-grid-three.*',
+                                ]) }}">
+
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                        class="fas fa-columns"></i>
+                    <span>Manage Footer</span>
+                </a>
+                <ul class="dropdown-menu">
+
+                    <li class="{{ setActive(['admin.footer-info.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.footer-info.index') }}">
+                            Footer Info
+                        </a>
+                    </li>
+
+                    <li class="{{ setActive(['admin.footer-socials.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.footer-socials.index') }}">
+                            Footer Socials
+                        </a>
+                    </li>
+
+                    <li class="{{ setActive(['admin.footer-grid-two.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.footer-grid-two.index') }}">
+                            Footer Grid Two
+                        </a>
+                    </li>
+
+                    <li class="{{ setActive(['admin.footer-grid-three.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.footer-grid-three.index') }}">
+                            Footer Grid Three
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+            {{-- Manage Footer End --}}
+
+            {{-- Subscribers --}}
             <li class="{{ setActive(['admin.settings.*']) }}"><a class="nav-link "
                     href="{{ route('admin.settings.index') }}"><i class="far fa-square"></i>
                     <span>Settings</span></a></li>
+            {{-- End Subscribers --}}
+
+            {{-- Settings --}}
+            <li class="{{ setActive(['admin.subscribers.*']) }}"><a class="nav-link "
+                    href="{{ route('admin.subscribers.index') }}">
+                    <i class="far fa-square"></i>
+                    <span>Subscribers</span>
+                </a>
+            </li>
+            {{-- End settings --}}
+
+
 
 
             {{-- For later Use --}}
