@@ -31,6 +31,7 @@ class VendorOrderDataTable extends DataTable
             <i class='far fa-eye'></i></a>";
                 return $showBtn;
             })
+
             // Customer name
             ->addColumn('customer', function ($query) {
                 return $query->user->name;

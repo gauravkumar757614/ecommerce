@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\AboutController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Frontend\CheckOutController;
 use App\Http\Controllers\Frontend\PaymentController;
@@ -8,9 +9,12 @@ use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProductController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NewsLetterController;
+use App\Http\Controllers\Frontend\PageController;
+use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserOrderController;
+use App\Http\Controllers\Frontend\UserVendorRequestController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserProfileController;
@@ -80,6 +84,14 @@ Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->
 Route::post('news-letters-request', [NewsLetterController::class, 'newsLettersRequest'])->name('news-letters-request');
 Route::get('news-letters-verification/{token}', [NewsLetterController::class, 'newsLettersEmailVerify'])->name('news-letters-verification');
 
+// Vendor profile routes
+Route::get('vendor-profile', [HomeController::class, 'vendorPage'])->name('vendor-profile-page');
+Route::get('vendor-products/{id}', [HomeController::class, 'vendorProductsPage'])->name('vendor-products-page');
+
+// About page routes
+Route::get('about', [PageController::class, 'index'])->name('about.index');
+Route::get('terms-and-conditions', [PageController::class, 'termsAndConditions'])->name('terms-and-conditions');
+
 
 /**
  * This is custom user related routes
@@ -106,6 +118,14 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     Route::get('checkout', [CheckOutController::class, 'index'])->name('checkout.index');
     Route::post('checkout/address-create', [CheckOutController::class, 'createAddress'])->name('checkout.address-create');
     Route::post('checkout/form-submit', [CheckOutController::class, 'checkoutFormSubmit'])->name('checkout.form-submit');
+
+    // Product review route
+    Route::post('review', [ReviewController::class, 'create'])->name('review.create');
+    Route::get('reviews', [ReviewController::class, 'index'])->name('review.index');
+
+    // Vendor request routes
+    Route::get('vendor-request', [UserVendorRequestController::class, 'index'])->name('vendor-request.index');
+    Route::post('vendor-request', [UserVendorRequestController::class, 'create'])->name('vendor-request.create');
 
     // Payment routes
     Route::get('payment', [PaymentController::class, 'index'])->name('payment.index');

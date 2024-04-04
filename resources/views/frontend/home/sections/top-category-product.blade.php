@@ -7,8 +7,11 @@
         <div class="row">
             <div class="col-xl-12 col-lg-12">
                 <div class="wsus__monthly_top_banner">
-                    <div class="wsus__monthly_top_banner_img">
-                        <img src="images/monthly_top_img3.jpg" alt="img" class="img-fluid w-100">
+                    {{-- <div class="wsus__monthly_top_banner_img">
+                        <a href="{{ $banner_one_content['banner_one']['banner_url'] }}">
+                            <img src="{{ asset($banner_one_content['banner_one']['banner_image']) }}" alt="img"
+                                class="img-fluid w-100">
+                        </a>
                         <span></span>
                     </div>
                     <div class="wsus__monthly_top_banner_text">
@@ -16,7 +19,15 @@
                         <h3>Up To <span>70% Off</span></h3>
                         <H6>Everything</H6>
                         <a class="shop_btn" href="#">shop now</a>
-                    </div>
+                    </div> --}}
+                    @if ($banner_one_content['banner_one']['status'] == 1)
+                        <div class="wsus__monthly_top_banner_img">
+                            <a href="{{ $banner_one_content['banner_one']['banner_url'] }}">
+                                <img src="{{ asset($banner_one_content['banner_one']['banner_image']) }}" alt="img"
+                                    class="img-fluid w-100">
+                            </a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -41,21 +52,24 @@
                                 if (array_keys($lastKey)[0] == 'category') {
                                     // Category model
                                     $category = \App\Models\Category::find($lastKey['category']);
-                                    $products[] = \App\Models\Product::where('category_id', $category->id)
+                                    $products[] = \App\Models\Product::with('reviews')
+                                        ->where('category_id', $category->id)
                                         ->orderBy('id', 'desc')
                                         ->take(12)
                                         ->get();
                                 } elseif (array_keys($lastKey)[0] == 'sub_category') {
                                     // Sub category model
                                     $category = \App\Models\SubCategory::find($lastKey['sub_category']);
-                                    $products[] = \App\Models\Product::where('sub_category_id', $category->id)
+                                    $products[] = \App\Models\Product::with('reviews')
+                                        ->where('sub_category_id', $category->id)
                                         ->orderBy('id', 'desc')
                                         ->take(12)
                                         ->get();
                                 } else {
                                     // Child category model
                                     $category = \App\Models\ChildCategory::find($lastKey['child_category']);
-                                    $products[] = \App\Models\Product::where('child_category_id', $category->id)
+                                    $products[] = \App\Models\Product::with('reviews')
+                                        ->where('child_category_id', $category->id)
                                         ->orderBy('id', 'desc')
                                         ->take(12)
                                         ->get();
@@ -82,18 +96,26 @@
                                     <div class="wsus__hot_deals__single_text">
                                         <h5> {!! limitText($item->name) !!} </h5>
                                         <p class="wsus__rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
+                                            @php
+                                                $avgRating = $item->reviews()->avg('rating');
+                                                $stars = round($avgRating);
+                                            @endphp
+
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= $stars)
+                                                    <i class="fas fa-star"></i>
+                                                @else
+                                                    <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
                                         </p>
                                         @if (checkDiscount($item))
                                             <p class="wsus__tk">{{ $settings->currency_icon }}{{ $item->offer_price }}
                                                 <del> {{ $settings->currency_icon }}{{ $item->price }}</del>
                                             </p>
                                         @else
-                                            <p class="wsus__tk"> {{ $settings->currency_icon }}{{ $item->price }} </p>
+                                            <p class="wsus__tk"> {{ $settings->currency_icon }}{{ $item->price }}
+                                            </p>
                                         @endif
                                     </div>
                                 </a>
@@ -105,4 +127,3 @@
         </div>
     </div>
 </section>
-

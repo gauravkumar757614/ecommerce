@@ -13,7 +13,7 @@
                         <h4>cart View</h4>
                         <ul>
                             <li><a href="#">home</a></li>
-                            <li><a href="#">peoduct</a></li>
+                            <li><a href="#">products</a></li>
                             <li><a href="#">cart view</a></li>
                         </ul>
                     </div>
@@ -160,26 +160,46 @@
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
                     <div class="wsus__single_banner_content">
-                        <div class="wsus__single_banner_img">
+                        {{-- <div class="wsus__single_banner_img">
                             <img src="images/single_banner_2.jpg" alt="banner" class="img-fluid w-100">
                         </div>
                         <div class="wsus__single_banner_text">
                             <h6>sell on <span>35% off</span></h6>
                             <h3>smart watch</h3>
                             <a class="shop_btn" href="#">shop now</a>
-                        </div>
+                        </div> --}}
+
+                        @if ($cartpage_content['banner_one']['banner_status'] == 1)
+                            <div class="wsus__single_banner_img">
+                                <a href="{{ $cartpage_content['banner_one']['banner_url'] }}">
+                                    <img src="{{ asset($cartpage_content['banner_one']['banner_image']) }}"
+                                        alt="img" class="img-fluid w-100">
+                                </a>
+                            </div>
+                        @endif
+
+
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6">
                     <div class="wsus__single_banner_content single_banner_2">
-                        <div class="wsus__single_banner_img">
+                        {{-- <div class="wsus__single_banner_img">
                             <img src="images/single_banner_3.jpg" alt="banner" class="img-fluid w-100">
                         </div>
                         <div class="wsus__single_banner_text">
                             <h6>New Collection</h6>
                             <h3>Cosmetics</h3>
                             <a class="shop_btn" href="#">shop now</a>
-                        </div>
+                        </div> --}}
+
+                        @if ($cartpage_content['banner_two']['banner_status'] == 1)
+                            <div class="wsus__single_banner_img">
+                                <a href="{{ $cartpage_content['banner_two']['banner_url'] }}">
+                                    <img src="{{ asset($cartpage_content['banner_two']['banner_image']) }}"
+                                        alt="img" class="img-fluid w-100">
+                                </a>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

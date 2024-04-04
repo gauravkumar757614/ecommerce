@@ -11,21 +11,24 @@
     if (array_keys($lastKey)[0] == 'category') {
         // Category model
         $category = \App\Models\Category::find($lastKey['category']);
-        $products = \App\Models\Product::where('category_id', $category->id)
+        $products = \App\Models\Product::with('reviews')
+            ->where('category_id', $category->id)
             ->orderBy('id', 'desc')
             ->take(12)
             ->get();
     } elseif (array_keys($lastKey)[0] == 'sub_category') {
         // Sub category model
         $category = \App\Models\SubCategory::find($lastKey['sub_category']);
-        $products = \App\Models\Product::where('sub_category_id', $category->id)
+        $products = \App\Models\Product::with('reviews')
+            ->where('sub_category_id', $category->id)
             ->orderBy('id', 'desc')
             ->take(12)
             ->get();
     } else {
         // Child category model
         $category = \App\Models\ChildCategory::find($lastKey['child_category']);
-        $products = \App\Models\Product::where('child_category_id', $category->id)
+        $products = \App\Models\Product::with('reviews')
+            ->where('child_category_id', $category->id)
             ->orderBy('id', 'desc')
             ->take(12)
             ->get();
@@ -70,19 +73,28 @@
                             <li><a href="#" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal-{{ $product->id }}"><i class="far fa-eye"></i></a>
                             </li>
-                            <li><a href="" class="add_to_wishlist" data-id="{{ $product->id }}"><i class="far fa-heart"></i></a></li>
+                            <li><a href="" class="add_to_wishlist" data-id="{{ $product->id }}"><i
+                                        class="far fa-heart"></i></a></li>
                             {{-- <li><a href="#"><i class="far fa-random"></i></a> --}}
                         </ul>
 
                         <div class="wsus__product_details">
                             <a class="wsus__category" href="#">{{ $product->category->name }} </a>
                             <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(133 review)</span>
+                                @php
+                                    $avgRating = $product->reviews()->avg('rating');
+                                    $stars = round($avgRating);
+                                @endphp
+
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $stars)
+                                        <i class="fas fa-star"></i>
+                                    @else
+                                        <i class="far fa-star"></i>
+                                    @endif
+                                @endfor
+
+                                <span>({{ count($product->reviews) }} review)</span>
                             </p>
                             <a class="wsus__pro_name"
                                 href="{{ route('product-details', $product->slug) }}">{{ limitText($product->name, 30) }}</a>
@@ -188,12 +200,20 @@
                                     @endif
 
                                     <p class="review">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span>20 review</span>
+                                        @php
+                                            $avgRating = $product->reviews()->avg('rating');
+                                            $stars = round($avgRating);
+                                        @endphp
+
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $stars)
+                                                <i class="fas fa-star"></i>
+                                            @else
+                                                <i class="far fa-star"></i>
+                                            @endif
+                                        @endfor
+
+                                        <span>({{ count($product->reviews) }} review)</span>
                                     </p>
                                     <p class="description">{!! $product->short_description !!}</p>
 
@@ -240,7 +260,9 @@
                                             <li><button type="submit" class="add_cart" href="#">add to
                                                     cart</button></li>
                                             <li><a class="buy_now" href="#">buy now</a></li>
-                                            <li><a href="" class="add_to_wishlist" data-id="{{ $product->id }}"><i class="fal fa-heart"></i></a></li>
+                                            <li><a href="" class="add_to_wishlist"
+                                                    data-id="{{ $product->id }}"><i class="fal fa-heart"></i></a>
+                                            </li>
                                             {{-- <li><a href="#"><i class="far fa-random"></i></a></li> --}}
                                         </ul>
                                     </form>

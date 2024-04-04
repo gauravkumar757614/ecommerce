@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Advertisement;
 use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\ProductVariant;
@@ -27,7 +28,10 @@ class CartController extends Controller
             toastr('Cart cleared! Time to add some joyous items to your shopping list!', 'warning', 'Cart empty!');
             return redirect()->route('home');
         }
-        return view('frontend.pages.cart-detail', compact('cartItems'));
+        $cartpage               =       Advertisement::where('key', 'cartpage-banner')->first();
+        $cartpage_content       =       json_decode($cartpage?->value,   true);
+
+        return view('frontend.pages.cart-detail', compact('cartItems', 'cartpage_content'));
     }
 
     /**

@@ -30,7 +30,7 @@
             <div class="row">
                 {{-- Banner --}}
                 <div class="col-xl-12">
-                    <div class="wsus__pro_page_bammer">
+                    {{-- <div class="wsus__pro_page_bammer">
                         <img src="{{ asset('frontend/images/pro_banner_1.jpg') }}" alt="banner" class="img-fluid w-100">
                         <div class="wsus__pro_page_bammer_text">
                             <div class="wsus__pro_page_bammer_text_center">
@@ -40,7 +40,16 @@
                                 <a href="#" class="add_cart">Discover Now</a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
+
+                    @if ($productpage_content['banner_one']['status'] == 1)
+                        <div class="wsus__pro_page_bammer">
+                            <a href="{{ $productpage_content['banner_one']['banner_url'] }}">
+                                <img src="{{ asset($productpage_content['banner_one']['banner_image']) }}" alt="img"
+                                    class="img-fluid w-100">
+                            </a>
+                        </div>
+                    @endif
                 </div>
                 {{-- Banner end --}}
 
@@ -146,11 +155,11 @@
                                     <div class="nav nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                         {{-- Grid view --}}
                                         <button
-                                            class="nav-link list-view {{ session()->has('product_list_style') && session()->get('product_list_style') == 'grid' ? 'active' : '' }} "
-                                            {{ !session()->has('product_list_style') ? 'active' : '' }} data-id="grid"
-                                            id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home"
-                                            type="button" role="tab" aria-controls="v-pills-home"
-                                            aria-selected="true">
+                                            class="nav-link list-view {{ session()->has('product_list_style') && session()->get('product_list_style') == 'grid' ? 'active' : '' }}
+                                            {{ !session()->has('product_list_style') ? 'active' : '' }}"
+                                            data-id="grid" id="v-pills-home-tab" data-bs-toggle="pill"
+                                            data-bs-target="#v-pills-home" type="button" role="tab"
+                                            aria-controls="v-pills-home" aria-selected="true">
                                             <i class="fas fa-th"></i>
                                         </button>
                                         {{-- Grid view end --}}
@@ -171,9 +180,9 @@
 
                         <div class="tab-content" id="v-pills-tabContent">
                             {{-- Grid view --}}
-                            <div class="tab-pane fade {{ session()->has('product_list_style') && session()->get('product_list_style') == 'grid' ? 'show active' : '' }}"
-                                {{ !session()->has('product_list_style') ? 'show active' : '' }} id="v-pills-home"
-                                role="tabpanel" aria-labelledby="v-pills-home-tab">
+                            <div class="tab-pane fade {{ session()->has('product_list_style') && session()->get('product_list_style') == 'grid' ? 'show active' : '' }}
+                                {{ !session()->has('product_list_style') ? 'show active' : '' }}"
+                                id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                                 <div class="row">
                                     @foreach ($products as $product)
                                         <div class="col-xl-4 col-sm-6">
@@ -213,12 +222,20 @@
                                                     <a class="wsus__category"
                                                         href="#">{{ $product->category->name }} </a>
                                                     <p class="wsus__pro_rating">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star-half-alt"></i>
-                                                        <span>(133 review)</span>
+                                                        @php
+                                                            $avgRating = $product->reviews()->avg('rating');
+                                                            $stars = round($avgRating);
+                                                        @endphp
+
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= $stars)
+                                                                <i class="fas fa-star"></i>
+                                                            @else
+                                                                <i class="far fa-star"></i>
+                                                            @endif
+                                                        @endfor
+
+                                                        <span>({{ count($product->reviews) }} review)</span>
                                                     </p>
                                                     <a class="wsus__pro_name"
                                                         href="{{ route('product-details', $product->slug) }}">{{ $product->name }}
@@ -299,12 +316,20 @@
                                                         {{ @$product->category->name }}
                                                     </a>
                                                     <p class="wsus__pro_rating">
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star"></i>
-                                                        <i class="fas fa-star-half-alt"></i>
-                                                        <span>(17 review)</span>
+                                                        @php
+                                                            $avgRating = $product->reviews()->avg('rating');
+                                                            $stars = round($avgRating);
+                                                        @endphp
+
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= $stars)
+                                                                <i class="fas fa-star"></i>
+                                                            @else
+                                                                <i class="far fa-star"></i>
+                                                            @endif
+                                                        @endfor
+
+                                                        <span>({{ count($product->reviews) }} review)</span>
                                                     </p>
 
                                                     <a class="wsus__pro_name"
@@ -454,12 +479,20 @@
                                         @endif
 
                                         <p class="review">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                            <span>20 review</span>
+                                            @php
+                                                $avgRating = $product->reviews()->avg('rating');
+                                                $stars = round($avgRating);
+                                            @endphp
+
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= $stars)
+                                                    <i class="fas fa-star"></i>
+                                                @else
+                                                    <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
+
+                                            <span>({{ count($product->reviews) }} review)</span>
                                         </p>
                                         <p class="description">{!! $product->short_description !!}</p>
 

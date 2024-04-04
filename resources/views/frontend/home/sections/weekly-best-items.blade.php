@@ -19,21 +19,24 @@
                     if (array_keys($lastKey)[0] == 'category') {
                         // Category model
                         $category = \App\Models\Category::find($lastKey['category']);
-                        $products = \App\Models\Product::where('category_id', $category->id)
+                        $products = \App\Models\Product::with('reviews')
+                            ->where('category_id', $category->id)
                             ->orderBy('id', 'desc')
                             ->take(6)
                             ->get();
                     } elseif (array_keys($lastKey)[0] == 'sub_category') {
                         // Sub category model
                         $category = \App\Models\SubCategory::find($lastKey['sub_category']);
-                        $products = \App\Models\Product::where('sub_category_id', $category->id)
+                        $products = \App\Models\Product::with('reviews')
+                            ->where('sub_category_id', $category->id)
                             ->orderBy('id', 'desc')
                             ->take(6)
                             ->get();
                     } else {
                         // Child category model
                         $category = \App\Models\ChildCategory::find($lastKey['child_category']);
-                        $products = \App\Models\Product::where('child_category_id', $category->id)
+                        $products = \App\Models\Product::with('reviews')
+                            ->where('child_category_id', $category->id)
                             ->orderBy('id', 'desc')
                             ->take(6)
                             ->get();
@@ -44,25 +47,7 @@
                         <h3> {{ $category->name }} </h3>
                     </div>
                     <div class="row weekly_best2">
-                        {{--
-                        <div class="col-xl-4 col-lg-4">
-                            <a class="wsus__hot_deals__single" href="#">
-                                <div class="wsus__hot_deals__single_img">
-                                    <img src="images/pro9.jpg" alt="bag" class="img-fluid w-100">
-                                </div>
-                                <div class="wsus__hot_deals__single_text">
-                                    <h5>men's sholder bag</h5>
-                                    <p class="wsus__rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </p>
-                                    <p class="wsus__tk">$120.20 <del>130.00</del></p>
-                                </div>
-                            </a>
-                        </div> --}}
+
                         @foreach ($products as $item)
                             <div class="col-xl-4 col-lg-4">
                                 <a class="wsus__hot_deals__single" href="{{ route('product-details', $item->slug) }}">
@@ -73,11 +58,18 @@
                                     <div class="wsus__hot_deals__single_text">
                                         <h5> {!! limitText($item->name) !!} </h5>
                                         <p class="wsus__rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
+                                            @php
+                                                $avgRating = $item->reviews()->avg('rating');
+                                                $stars = round($avgRating);
+                                            @endphp
+
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= $stars)
+                                                    <i class="fas fa-star"></i>
+                                                @else
+                                                    <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
                                         </p>
                                         @if (checkDiscount($item))
                                             <p class="wsus__tk">{{ $settings->currency_icon }}{{ $item->offer_price }}

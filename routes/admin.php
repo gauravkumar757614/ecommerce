@@ -1,12 +1,15 @@
 <?php
 
+use App\Http\Controllers\Backend\AboutController;
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\AdminReviewController;
 use App\Http\Controllers\Backend\AdminVendorProfileController;
+use App\Http\Controllers\Backend\AdvertisementController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\CouponController;
-use App\Http\Controllers\Backend\EmailConfigurationSettingController;
+use App\Http\Controllers\Backend\CustomerListController;
 use App\Http\Controllers\Backend\FlashSaleController;
 use App\Http\Controllers\Backend\FooterGridThreeController;
 use App\Http\Controllers\Backend\FooterGridTwoController;
@@ -29,8 +32,11 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubscriberController;
+use App\Http\Controllers\Backend\TermsAndConditionsController;
 use App\Http\Controllers\Backend\TransactionController;
-use App\Models\FooterGridThree;
+use App\Http\Controllers\Backend\VendorConditionController;
+use App\Http\Controllers\Backend\VendorListController;
+use App\Http\Controllers\Backend\VendorRequestController;
 use Illuminate\Support\Facades\Route;
 
 // Profile routes
@@ -92,6 +98,10 @@ Route::get('products-variant-item-edit/{variantItemId}', [ProductVariantItemCont
 Route::put('products-variant-item-update/{variantItemId}', [ProductVariantItemController::class, 'update'])->name('products-variant-item.update');
 Route::delete('products-variant-item/{variantItemId}', [ProductVariantItemController::class, 'destroy'])->name('products-variant-item.destroy');
 Route::put('products-variant-item/change-status}', [ProductVariantItemController::class, 'changeStatus'])->name('products-variant-item.change-status');
+
+// Review routes
+Route::get('reviews', [AdminReviewController::class, 'index'])->name('reviews.index');
+Route::put('reviews/change-status', [AdminReviewController::class, 'changeStatus'])->name('reviews.change-status');
 
 // Seller product routes
 Route::get('seller-products', [SellerProductController::class, 'index'])->name('seller-products.index');
@@ -160,6 +170,39 @@ Route::resource('footer-grid-three', FooterGridThreeController::class);
 Route::get('subscribers', [SubscriberController::class, 'index'])->name('subscribers.index');
 Route::delete('subscriber-destroy/{id}', [SubscriberController::class, 'destroy'])->name('subscriber.destroy');
 Route::post('subscriber-send-mail', [SubscriberController::class, 'sendMail'])->name('subscriber-send-mail');
+
+// Advertisement routes
+Route::get('advertisement', [AdvertisementController::class, 'index'])->name('advertisement.index');
+Route::put('advertisement/homepage-banner-section-one', [AdvertisementController::class, 'homepageBannerSectionOne'])->name('homepage-banner-section-one');
+Route::put('advertisement/homepage-banner-section-two', [AdvertisementController::class, 'homepageBannerSectionTwo'])->name('homepage-banner-section-two');
+Route::put('advertisement/homepage-banner-section-three', [AdvertisementController::class, 'homepageBannerSectionThree'])->name('homepage-banner-section-three');
+Route::put('advertisement/homepage-banner-section-four', [AdvertisementController::class, 'homepageBannerSectionFour'])->name('homepage-banner-section-four');
+Route::put('advertisement/productpage-banner', [AdvertisementController::class, 'productpageBanner'])->name('productpage-banner');
+Route::put('advertisement/cartpage-banner', [AdvertisementController::class, 'cartpageBanner'])->name('cartpage-banner');
+
+// Vendor request routes
+Route::get('vendor-requests', [VendorRequestController::class, 'index'])->name('vendor-requests.index');
+Route::get('vendor-requests/{id}/show', [VendorRequestController::class, 'show'])->name('vendor-requests.show');
+Route::put('vendor-requests/{id}/change-status', [VendorRequestController::class, 'changeStatus'])->name('vendor-requests.change-status');
+
+// Customer routes
+Route::get('customers', [CustomerListController::class, 'index'])->name('customers.index');
+Route::put('customers/change-status', [CustomerListController::class, 'changeStatus'])->name('customers.change-status');
+
+// Vendor routes
+Route::get('vendors-list', [VendorListController::class, 'index'])->name('vendors-list.index');
+Route::put('vendors-list/change-status', [VendorListController::class, 'changeStatus'])->name('vendors-list.change-status');
+
+Route::get('vendor-conditions', [VendorConditionController::class, 'index'])->name('vendor-conditions.index');
+Route::put('vendor-conditions/update', [VendorConditionController::class, 'update'])->name('vendor-conditions.update');
+
+Route::get('about', [AboutController::class, 'index'])->name('about.index');
+Route::put('about/update', [AboutController::class, 'update'])->name('about.update');
+
+// Terms and condition page routes
+Route::get('terms-and-conditions', [TermsAndConditionsController::class, 'index'])->name('terms-and-conditions.index');
+Route::put('terms-and-conditions/update', [TermsAndConditionsController::class, 'update'])->name('terms-and-conditions.update');
+
 
 // Payment setting route
 Route::get('payment-setting', [PaymentSettingController::class, 'index'])->name('payment-setting.index');

@@ -10,6 +10,7 @@
         <li><a href="{{ route('vendor.orders.index') }}"><i class="far fa-user"></i> Orders </a></li>
 
         <li><a href="{{ route('vendor.products.index') }}"><i class="far fa-user"></i> Products </a></li>
+        <li><a href="{{ route('vendor.reviews.index') }}"><i class="far fa-user"></i> Reviews </a></li>
         <li><a href="{{ route('vendor.shop-profile.index') }}"><i class="far fa-user"></i> Shop Profile</a></li>
         <li><a href="{{ route('vendor.profile') }}"><i class="far fa-user"></i> My Profile</a></li>
 

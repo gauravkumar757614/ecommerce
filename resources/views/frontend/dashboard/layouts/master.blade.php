@@ -27,6 +27,15 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery.classycountdown.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/venobox.min.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('backend/assets/modules/summernote/summernote-bs4.css') }}">
+
+    {{-- Icon picker css link from bootstrap --}}
+    <link rel="stylesheet" href="{{ asset('backend/assets/css/bootstrap-iconpicker.min.css') }}">
+    {{-- Icon picker css link from bootstrap End --}}
+    {{-- Datepicker css --}}
+    <link rel="stylesheet" href="{{ asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.css') }}">
+
+
     {{-- This is the javascript css cdn for the Laravel Toastr --}}
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
@@ -100,8 +109,17 @@
     <!--classycountdown js-->
     <script src="{{ asset('frontend/js/jquery.classycountdown.js') }}"></script>
 
-    {{-- Jquery datatable js cdn link for yajrabox --}}
-    <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script src="{{ asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+
+
+    {{-- Icon picker js links from bootstrap --}}
+    <script src="{{ asset('backend/assets/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
+    {{-- Icon picker js links from bootstrap End --}}
+    {{-- Summernote cdn js link --}}
+    <script src="{{ asset('backend/assets/modules/summernote/summernote-bs4.js') }}"></script>
+
+    < {{-- Jquery datatable js cdn link for yajrabox --}} <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
     {{-- This is the javascript js cdn for Laravel Toastr --}}
@@ -121,6 +139,23 @@
             @endforeach
         @endif
     </script>
+
+
+    <script>
+        $('.summernote').summernote({
+            height: 150
+        });
+
+        $('.datepicker').daterangepicker({
+            locale: {
+                format: 'YYYY-MM-DD'
+            },
+            singleDatePicker: true
+        });
+    </script>
+
+
+
     {{-- Dynamic delete alert --}}
     <script>
         $(document).ready(function() {

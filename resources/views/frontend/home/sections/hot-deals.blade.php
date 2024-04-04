@@ -51,12 +51,20 @@
                                 <div class="wsus__product_details">
                                     <a class="wsus__category" href="#">{{ $product->category->name }} </a>
                                     <p class="wsus__pro_rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <span>(133 review)</span>
+                                        @php
+                                            $avgRating = $product->reviews()->avg('rating');
+                                            $stars = round($avgRating);
+                                        @endphp
+
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $stars)
+                                                <i class="fas fa-star"></i>
+                                            @else
+                                                <i class="far fa-star"></i>
+                                            @endif
+                                        @endfor
+
+                                        <span>({{ count($product->reviews) }} review)</span>
                                     </p>
                                     <a class="wsus__pro_name"
                                         href="{{ route('product-details', $product->slug) }}">{{ limitText($product->name, 30) }}</a>
@@ -103,40 +111,70 @@
                 <div class="row">
                     <div class="col-xl-6 col-lg-6">
                         <div class="wsus__single_banner_content banner_1">
-                            <div class="wsus__single_banner_img">
+                            {{-- <div class="wsus__single_banner_img">
                                 <img src="images/single_banner_44.jpg" alt="banner" class="img-fluid w-100">
                             </div>
                             <div class="wsus__single_banner_text">
                                 <h6>sell on <span>35% off</span></h6>
                                 <h3>smart watch</h3>
                                 <a class="shop_btn" href="#">shop now</a>
-                            </div>
+                            </div> --}}
+
+                            @if ($banner_three_content['banner_one']['banner_status'] == 1)
+                                <div class="wsus__single_banner_img">
+                                    <a href="{{ $banner_three_content['banner_one']['banner_url'] }}">
+                                        <img src="{{ asset($banner_three_content['banner_one']['banner_image']) }}"
+                                            alt="banner" class="img-fluid w-100">
+                                    </a>
+                                </div>
+                            @endif
+
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6">
                         <div class="row">
                             <div class="col-12">
                                 <div class="wsus__single_banner_content single_banner_2">
-                                    <div class="wsus__single_banner_img">
+                                    {{-- <div class="wsus__single_banner_img">
                                         <img src="images/single_banner_55.jpg" alt="banner" class="img-fluid w-100">
                                     </div>
                                     <div class="wsus__single_banner_text">
                                         <h6>New Collection</h6>
                                         <h3>kid's fashion</h3>
                                         <a class="shop_btn" href="#">shop now</a>
-                                    </div>
+                                    </div> --}}
+
+                                    @if ($banner_three_content['banner_two']['banner_status'] == 1)
+                                        <div class="wsus__single_banner_img">
+                                            <a href="{{ $banner_three_content['banner_two']['banner_url'] }}">
+                                                <img src="{{ asset($banner_three_content['banner_two']['banner_image']) }}"
+                                                    alt="banner" class="img-fluid w-100">
+                                            </a>
+                                        </div>
+                                    @endif
+
+
                                 </div>
                             </div>
                             <div class="col-12 mt-lg-4">
                                 <div class="wsus__single_banner_content">
-                                    <div class="wsus__single_banner_img">
+                                    {{-- <div class="wsus__single_banner_img">
                                         <img src="images/single_banner_66.jpg" alt="banner" class="img-fluid w-100">
                                     </div>
                                     <div class="wsus__single_banner_text">
                                         <h6>sell on <span>42% off</span></h6>
                                         <h3>winter collection</h3>
                                         <a class="shop_btn" href="#">shop now</a>
-                                    </div>
+                                    </div> --}}
+
+                                    @if ($banner_three_content['banner_three']['banner_status'] == 1)
+                                        <div class="wsus__single_banner_img">
+                                            <a href="{{ $banner_three_content['banner_three']['banner_url'] }}">
+                                                <img src="{{ asset($banner_three_content['banner_three']['banner_image']) }}"
+                                                    alt="banner" class="img-fluid w-100">
+                                            </a>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -215,12 +253,20 @@
                                         @endif
 
                                         <p class="review">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                            <span>20 review</span>
+                                            @php
+                                                $avgRating = $product->reviews()->avg('rating');
+                                                $stars = round($avgRating);
+                                            @endphp
+
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= $stars)
+                                                    <i class="fas fa-star"></i>
+                                                @else
+                                                    <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
+
+                                            <span>({{ count($product->reviews) }} review)</span>
                                         </p>
                                         <p class="description">{!! $product->short_description !!}</p>
 
