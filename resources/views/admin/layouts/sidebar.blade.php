@@ -194,6 +194,39 @@
             </li>
             {{-- Manage Website End --}}
 
+            {{-- Manage Blog --}}
+            <li
+                class="dropdown
+                                {{ setActive(['admin.blog-category.*', 'admin.blog.*', 'admin.blog-comments.*']) }}">
+
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fas fa-columns"></i>
+                    <span>Manage Blog</span>
+                </a>
+                <ul class="dropdown-menu">
+
+                    <li class="{{ setActive(['admin.blog-category.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.blog-category.index') }}">
+                            Categories
+                        </a>
+                    </li>
+
+                    <li class="{{ setActive(['admin.blog.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.blog.index') }}">
+                            Blogs
+                        </a>
+                    </li>
+
+                    <li class="{{ setActive(['admin.blog-comments.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.blog-comments.index') }}">
+                            Blog comments
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+            {{-- Manage Blog End --}}
+
             {{-- Manage Footer --}}
             <li
                 class="dropdown
@@ -241,7 +274,13 @@
             {{-- Manage Pending Vendor Request --}}
             <li
                 class="dropdown
-                  {{ setActive(['admin.vendor-requests.*', 'admin.customers.*', 'admin.vendors-list.*']) }}">
+                  {{ setActive([
+                      'admin.vendor-requests.*',
+                      'admin.customers.*',
+                      'admin.vendors-list.*',
+                      'admin.manage-user.*',
+                      'admin.admin-list.*',
+                  ]) }}">
 
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fas fa-columns"></i>
@@ -263,6 +302,18 @@
                     <li class="{{ setActive(['admin.vendor-requests.*']) }}">
                         <a class="nav-link" href="{{ route('admin.vendor-requests.index') }}">
                             Pending vendor requests
+                        </a>
+                    </li>
+
+                    <li class="{{ setActive(['admin.admin-list.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.admin-list.index') }}">
+                            Admin List
+                        </a>
+                    </li>
+
+                    <li class="{{ setActive(['admin.manage-user.*']) }}">
+                        <a class="nav-link" href="{{ route('admin.manage-user.index') }}">
+                            Manage Users
                         </a>
                     </li>
 

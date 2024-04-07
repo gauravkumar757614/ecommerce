@@ -25,6 +25,9 @@ class SettingController extends Controller
             'site_name'         =>      ['required', 'max:200'],
             'layout'            =>      ['required', 'max:200'],
             'contact_email'     =>      ['required', 'max:200'],
+            'contact_phone'     =>      ['nullable'],
+            'contact_address'   =>      ['nullable'],
+            'map'               =>      ['nullable', 'url'],
             'currency_name'     =>      ['required', 'max:200'],
             'currency_icon'     =>      ['required', 'max:200'],
             'timezone'          =>      ['required', 'max:200'],
@@ -33,12 +36,15 @@ class SettingController extends Controller
         GeneralSetting::updateOrCreate(
             ['id' => 1],
             [
-                'site_name'     =>      $request->site_name,
-                'layout'        =>      $request->layout,
-                'contact_email' =>      $request->contact_email,
-                'currency_name' =>      $request->currency_name,
-                'currency_icon' =>      $request->currency_icon,
-                'time_zone'     =>      $request->timezone,
+                'site_name'         =>      $request->site_name,
+                'layout'            =>      $request->layout,
+                'contact_email'     =>      $request->contact_email,
+                'contact_phone'     =>      $request->contact_phone,
+                'contact_address'   =>      $request->contact_address,
+                'map'               =>      $request->map,
+                'currency_name'     =>      $request->currency_name,
+                'currency_icon'     =>      $request->currency_icon,
+                'time_zone'         =>      $request->timezone,
             ]
 
         );

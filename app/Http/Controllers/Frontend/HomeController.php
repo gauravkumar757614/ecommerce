@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\About;
 use App\Models\Advertisement;
+use App\Models\Blog;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
@@ -44,6 +45,9 @@ class HomeController extends Controller
         $banner_three_content   =       json_decode($banner_three?->value,  true);
         $banner_four_content    =       json_decode($banner_four?->value,   true);
 
+        // Blogs
+        $blogs                  =       Blog::with(['category', 'user'])->where('status', 1)->orderBy('id', 'desc')->take(8)->get();
+
         return view(
             'frontend.home.home',
             compact(
@@ -60,6 +64,7 @@ class HomeController extends Controller
                 'banner_two_content',
                 'banner_three_content',
                 'banner_four_content',
+                'blogs'
             )
         );
     }

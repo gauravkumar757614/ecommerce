@@ -9,5 +9,15 @@ class GeneralSetting extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['site_name', 'layout', 'contact_email', 'currency_name', 'currency_icon', 'time_zone'];
+    protected $fillable = [
+        'site_name',
+        'layout',
+        'contact_email',
+        'contact_phone',
+        'contact_address',
+        'map',
+        'currency_name',
+        'currency_icon',
+        'time_zone'
+    ];
 }

@@ -2,9 +2,13 @@
 
 use App\Http\Controllers\Backend\AboutController;
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\AdminListController;
 use App\Http\Controllers\Backend\AdminReviewController;
 use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\AdvertisementController;
+use App\Http\Controllers\Backend\BlogCategoryController;
+use App\Http\Controllers\Backend\BlogCommentController;
+use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
@@ -16,6 +20,7 @@ use App\Http\Controllers\Backend\FooterGridTwoController;
 use App\Http\Controllers\Backend\FooterInfoController;
 use App\Http\Controllers\Backend\FooterSocialController;
 use App\Http\Controllers\Backend\HomePageSettingController;
+use App\Http\Controllers\Backend\ManageUserController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaymentSettingController;
 use App\Http\Controllers\Backend\PaypalSettingController;
@@ -152,6 +157,16 @@ Route::put('product-slider-section-one', [HomePageSettingController::class, 'upd
 Route::put('product-slider-section-two', [HomePageSettingController::class, 'updateProductSliderSectionOTwo'])->name('product-slider-section-two.update');
 Route::put('product-slider-section-three', [HomePageSettingController::class, 'updateProductSliderSectionOThree'])->name('product-slider-section-three.update');
 
+// Blog & related Category route
+Route::put('blog-category/change-status', [BlogCategoryController::class, 'changeStatus'])->name('blog-category.change-status');
+Route::resource('blog-category', BlogCategoryController::class);
+
+Route::put('blog/change-status', [BlogController::class, 'changeStatus'])->name('blog.change-status');
+Route::resource('blog', BlogController::class);
+
+Route::get('blog-comments', [BlogCommentController::class, 'index'])->name('blog-comments.index');
+Route::delete('blog-comment/{id}', [BlogCommentController::class, 'destroy'])->name('blog-comment.destroy');
+
 // Footer routes
 Route::resource('footer-info', FooterInfoController::class);
 
@@ -188,6 +203,15 @@ Route::put('vendor-requests/{id}/change-status', [VendorRequestController::class
 // Customer routes
 Route::get('customers', [CustomerListController::class, 'index'])->name('customers.index');
 Route::put('customers/change-status', [CustomerListController::class, 'changeStatus'])->name('customers.change-status');
+
+// Admin list routes
+Route::get('admin-list', [AdminListController::class, 'index'])->name('admin-list.index');
+Route::put('admin-list/change-status', [AdminListController::class, 'changeStatus'])->name('admin-list.change-status');
+Route::delete('admin-list/{id}', [AdminListController::class, 'destroy'])->name('admin-list.destroy');
+
+// Manage users routes
+Route::get('manage-user', [ManageUserController::class, 'index'])->name('manage-user.index');
+Route::post('manage-user', [ManageUserController::class, 'create'])->name('manage-user.create');
 
 // Vendor routes
 Route::get('vendors-list', [VendorListController::class, 'index'])->name('vendors-list.index');

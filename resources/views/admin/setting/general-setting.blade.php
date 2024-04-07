@@ -25,6 +25,25 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="">Contact Phone</label>
+                    <input type="text" class="form-control" name="contact_phone"
+                        value="{{ @$generalSetting->contact_phone }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Contact Address</label>
+                    <input type="text" class="form-control" name="contact_address"
+                        value="{{ @$generalSetting->contact_address }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Google map url</label>
+                    <input type="text" class="form-control" name="map" value="{{ @$generalSetting->map }}">
+                </div>
+
+                <hr>
+
+                <div class="form-group">
                     <label for="">Default Currency Name</label>
                     <select name="currency_name" id="" class="form-control select2">
                         <option value="">Select</option>
@@ -46,7 +65,8 @@
                     <select name="timezone" id="" class="form-control select2">
                         <option value="">Select</option>
                         @foreach (config('setting.time_zone') as $key => $timezone)
-                            <option {{ @$generalSetting->time_zone == $key ? 'selected' : '' }}  value="{{ $key }}">{{ $key }}</option>
+                            <option {{ @$generalSetting->time_zone == $key ? 'selected' : '' }}
+                                value="{{ $key }}">{{ $key }}</option>
                         @endforeach
                     </select>
                 </div>

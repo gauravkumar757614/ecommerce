@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\AboutController;
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\CheckOutController;
 use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\CartController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Frontend\FrontendProductController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NewsLetterController;
 use App\Http\Controllers\Frontend\PageController;
+use App\Http\Controllers\Frontend\ProductTrackController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
@@ -88,9 +90,18 @@ Route::get('news-letters-verification/{token}', [NewsLetterController::class, 'n
 Route::get('vendor-profile', [HomeController::class, 'vendorPage'])->name('vendor-profile-page');
 Route::get('vendor-products/{id}', [HomeController::class, 'vendorProductsPage'])->name('vendor-products-page');
 
-// About page routes
+// Website related pages routes
 Route::get('about', [PageController::class, 'index'])->name('about.index');
 Route::get('terms-and-conditions', [PageController::class, 'termsAndConditions'])->name('terms-and-conditions');
+Route::get('contact', [PageController::class, 'contact'])->name('contact');
+Route::post('contact', [PageController::class, 'handleContactForm'])->name('handle-contact-form');
+
+// Order tracking routes
+Route::get('product-tracking', [ProductTrackController::class, 'index'])->name('product-tracking.index');
+
+// Blog routes
+Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog-details');
+Route::get('blog', [BlogController::class, 'blog'])->name('blog');
 
 
 /**
@@ -140,4 +151,7 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // Razorpay routes
     Route::post('razorpay/payment', [PaymentController::class, 'payWithRazorpay'])->name('razorpay.payment');
+
+    // Blog comment route
+    Route::post('blog-comment', [BlogController::class, 'blogComment'])->name('blog-comment');
 });
