@@ -17,7 +17,7 @@
             <div class="col-xl-3 col-sm-7 col-md-6 col-lg-3">
                 {{-- Basic Details --}}
                 <div class="wsus__footer_content">
-                    <a class="wsus__footer_2_logo" href="#">
+                    <a class="wsus__footer_2_logo" href="{{ url('/') }}">
                         <img src="{{ asset(@$footerInfo->logo) }}" alt="logo">
                     </a>
                     <a class="action" href="callto:+8896254857456">
@@ -86,7 +86,7 @@
 
                     <div class="footer_payment">
                         <p>We're using safe payment for :</p>
-                        <img src="images/credit2.png" alt="card" class="img-fluid">
+                        <img src="{{ asset('frontend/images/credit2.png') }}" alt="card" class="img-fluid">
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\CodSetting;
 use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Models\OrderProduct;
@@ -15,10 +16,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Stripe\Stripe;
 use Gloudemans\Shoppingcart\Facades\Cart;
-
 // paypal class namespace
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Stripe\Charge;
+use Illuminate\Support\Str;
 
 class PaymentController extends Controller
 {
@@ -247,5 +248,27 @@ class PaymentController extends Controller
     public function payWithRazorpay(Request $request)
     {
         dd($request->all());
+    }
+
+    /**
+     * Cash on delivery method
+     */
+    public function payWithCod(Request $request)
+    {
+        $codPay         =       CodSetting::first();
+        $settings       =       GeneralSetting::first();
+
+        if ($codPay->status == 0) {
+            return redirect()->back();
+        }
+
+        $total          =       getFinalPayableAmount();
+        $payableAmount  =       round($total, 2);
+
+        $this->storeOrder('COD', 0, Str::random(10), $payableAmount, $settings->currency_name);
+        // clearSession function will clear the cart and all the session when the payment is successfull
+        $this->clearSession();
+
+        return redirect()->route('user.payment.success');
     }
 }

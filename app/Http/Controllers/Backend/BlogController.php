@@ -121,6 +121,9 @@ class BlogController extends Controller
         // Deleting related image first
         $this->deleteImage($blog->image);
 
+        // Deleting related comments
+        $blog->comments()->deleted();
+
         $blog->delete();
         return response(['status' => 'success', 'message' => 'Deleted successfully!']);
     }

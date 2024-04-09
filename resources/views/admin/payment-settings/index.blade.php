@@ -29,7 +29,7 @@
                                         </a>
                                         <a class="list-group-item list-group-item-action" id="list-settings-list"
                                             data-toggle="list" href="#list-settings" role="tab">
-                                            Settings
+                                            COD
                                         </a>
                                     </div>
                                 </div>
@@ -39,15 +39,7 @@
                                         @include('admin.payment-settings.section.paypal-setting')
                                         @include('admin.payment-settings.section.stripe-setting')
                                         @include('admin.payment-settings.section.razorpay-setting')
-
-
-                                        <div class="tab-pane fade" id="list-settings" role="tabpanel"
-                                            aria-labelledby="list-settings-list">
-                                            Lorem ipsum culpa in ad velit dolore anim labore incididunt do aliqua sit veniam
-                                            commodo elit dolore do labore occaecat laborum sed quis proident fugiat sunt
-                                            pariatur. Cupidatat ut fugiat anim ut dolore excepteur ut voluptate dolore
-                                            excepteur mollit commodo.
-                                        </div>
+                                        @include('admin.payment-settings.section.cod-setting')
                                     </div>
                                 </div>
                             </div>

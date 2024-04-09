@@ -1,4 +1,4 @@
-@extends('frontend.dashboard.layouts.master');
+@extends('frontend.dashboard.layouts.master')
 
 @section('title')
     {{ $settings->site_name }} || Profile
@@ -107,8 +107,6 @@
                                         </div>
                                     </form>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>

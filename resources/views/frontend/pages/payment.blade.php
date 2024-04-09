@@ -45,6 +45,10 @@
                                     data-bs-target="#v-pills-razorpay" type="button" role="tab"
                                     aria-controls="v-pills-razorpay" aria-selected="false">Razorpay</button>
 
+                                <button class="nav-link common_btn" id="v-pills-profile-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-cod" type="button" role="tab"
+                                    aria-controls="v-pills-razorpay" aria-selected="false">COD</button>
+
                             </div>
                         </div>
                     </div>
@@ -74,8 +78,12 @@
                             {{-- Second payment card stripe end --}}
 
                             {{-- Third payment card razorpay --}}
-                            @include('frontend.pages.payment-gateway.razorpay');
+                            @include('frontend.pages.payment-gateway.razorpay')
                             {{-- Third payment card razorpay end --}}
+
+                            {{-- Fourth payment card razorpay --}}
+                            @include('frontend.pages.payment-gateway.cod')
+                            {{-- Fourth payment card razorpay end --}}
 
 
                         </div>

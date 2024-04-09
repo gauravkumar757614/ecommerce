@@ -152,6 +152,9 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
     // Razorpay routes
     Route::post('razorpay/payment', [PaymentController::class, 'payWithRazorpay'])->name('razorpay.payment');
 
+    // Cod routes
+    Route::get('cod/payment', [PaymentController::class, 'payWithCod'])->name('cod.payment');
+
     // Blog comment route
     Route::post('blog-comment', [BlogController::class, 'blogComment'])->name('blog-comment');
 });
