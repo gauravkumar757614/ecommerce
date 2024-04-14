@@ -31,8 +31,11 @@
                 <div class="row">
                     <div class="col-xl-8 col-lg-7">
                         <div class="wsus__check_form">
-                            <h5>Billing Details <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">add
-                                    new address</a></h5>
+                            <h5>Billing Details
+                                <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    add new address
+                                </a>
+                            </h5>
 
                             <div class="row">
                                 {{-- Addresses of users --}}

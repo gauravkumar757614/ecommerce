@@ -54,8 +54,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
-
-Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
 //======================================================================================================
 
 //  Flash sale routes
@@ -103,6 +101,9 @@ Route::get('product-tracking', [ProductTrackController::class, 'index'])->name('
 Route::get('blog-details/{slug}', [BlogController::class, 'blogDetails'])->name('blog-details');
 Route::get('blog', [BlogController::class, 'blog'])->name('blog');
 
+// Add product to wishlist
+Route::post('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
+
 
 /**
  * This is custom user related routes
@@ -122,7 +123,6 @@ Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 
 
     // Wish list routes
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
-    Route::post('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
     Route::delete('wishlist/remove-product/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
 
     // Check out routes

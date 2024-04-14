@@ -8,7 +8,7 @@
     <section id="wsus__dashboard">
         <div class="container-fluid">
             {{-- Sidebar --}}
-            @include('frontend.dashboard.layouts.sidebar');
+            @include('frontend.dashboard.layouts.sidebar')
             {{-- Sidebar End --}}
 
 

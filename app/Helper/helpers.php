@@ -1,8 +1,9 @@
 <?php
 
+use App\Models\GeneralSetting;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Session;
-use PhpParser\Node\Expr\Cast\String_;
+use Illuminate\Support\Str;
 
 /**
  * Set sidebar item active
@@ -48,7 +49,7 @@ function calculateDiscount($originalPrice, $discountPrice)
  *  Check product type
  */
 
-function productType(string $type): String
+function productType($type)
 {
     switch ($type) {
         case 'new_arrival':
@@ -138,5 +139,13 @@ function getFinalPayableAmount()
 // Limit text
 function limitText($text, $limit = 20)
 {
-    return \Str::limit($text, $limit, '...');
+    return Str::limit($text, $limit, '...');
+}
+
+
+// Get currency icon
+function getCurrencyIcon()
+{
+    $icon       =       GeneralSetting::first();
+    return $icon->currency_icon;
 }

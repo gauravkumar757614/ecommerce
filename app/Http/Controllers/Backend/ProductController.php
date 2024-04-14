@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
+use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\ProductImageGallery;
 use App\Models\ProductVariant;
@@ -168,6 +169,11 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         $product                    =       Product::findOrFail($id);
+
+        // Before deleting product checking this product has dependent orders
+        if (OrderProduct::where('product_id', $product->id)->count() > 0) {
+            return response(['status' => 'error', 'message' => ' Cannot be deleted! This product has dependent orders.']);
+        }
 
         // Deleting image of the product
         $this->deleteImage($product->thumb_image);

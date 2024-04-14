@@ -55,9 +55,10 @@
                                         </th>
                                     </tr>
 
+                                    {{-- @dd($wishlistProducts); --}}
                                     @foreach ($wishlistProducts as $item)
                                         <tr class="d-flex">
-                                            <td class="wsus__pro_img"><img src="{{ asset($item->product->thumb_image) }}"
+                                            <td class="wsus__pro_img"><img src="{{ asset(@$item->product->thumb_image) }}"
                                                     alt="product" class="img-fluid w-100">
                                                 <a href="{{ route('user.wishlist.destroy', $item->id) }}">
                                                     <i class="far fa-times"></i>
@@ -65,20 +66,20 @@
                                             </td>
 
                                             <td class="wsus__pro_name" style="width: 500px !important">
-                                                <p> {{ $item->product->name }} </p>
+                                                <p> {{ @$item->product->name }} </p>
                                             </td>
 
                                             <td class="wsus__pro_status">
-                                                <p> {{ $item->product->qty }} </p>
+                                                <p> {{ @$item->product->qty }} </p>
                                             </td>
 
                                             <td class="wsus__pro_tk" style="width: 236px !important">
-                                                <h6> {{ $settings->currency_icon }} {{ $item->product->price }} </h6>
+                                                <h6> {{ @$settings->currency_icon }} {{ @$item->product->price }} </h6>
                                             </td>
 
                                             <td class="wsus__pro_icon">
                                                 <a class="common_btn"
-                                                    href="{{ route('product-details', $item->product->slug) }}"> View
+                                                    href="{{ route('product-details', @$item->product->slug) }}"> View
                                                     product
                                                 </a>
                                             </td>

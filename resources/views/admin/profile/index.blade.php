@@ -27,6 +27,9 @@
                                 <div class="row">
                                     {{-- Upload Image Field --}}
                                     <div class="form-group col-12">
+                                        <img src="{{ Auth::user()->image }}" alt="admin image" width="150">
+                                        <p>Preview image</p>
+                                        <br>
                                         <label for="image">Upload Image</label>
                                         <input type="file" name="image" class="form-control">
                                     </div>

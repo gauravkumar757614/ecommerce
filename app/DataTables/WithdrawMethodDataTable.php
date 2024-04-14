@@ -2,8 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Vendor;
-use App\Models\VendorRequest;
+use App\Models\WithdrawMethod;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -13,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class VendorRequestDataTable extends DataTable
+class WithdrawMethodDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,47 +22,33 @@ class VendorRequestDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-
-            // User name
-            ->addColumn('user_name', function ($query) {
-                return $query->user->name;
-            })
-
-            // Shop name
-            ->addColumn('shop_name', function ($query) {
-                return $query->shop_name;
-            })
-            // Shop email
-            ->addColumn('shop_email', function ($query) {
-                return $query->email;
-            })
-
-            // Status
-            ->addColumn('status', function ($query) {
-                if ($query->status == 1) {
-                    return "<span class='badge bg-success'> completed </span>";
-                } else {
-                    return "<span class='badge bg-warning'> pending </span>";
-                }
-            })
-
-            // Custom buttons
             ->addColumn('action', function ($query) {
-                // Show button
-                $showBtn       =   "<a href='" . route('admin.vendor-requests.show', $query->id) . "' class='btn btn-primary'>
-            <i class='far fa-eye'></i></a>";
-                return $showBtn;
+                // Edit button
+                $editBtn       =   "<a href='" . route('admin.withdraw-method.edit', $query->id) . "' class='btn btn-primary'>
+            <i class='far fa-edit'></i></a>";
+
+                // Delete button
+                $deleteBtn     =   "<a href='" . route('admin.withdraw-method.destroy', $query->id) . "' class='btn btn-danger ml-2 delete-item'>
+             <i class='fas fa-user-times'></i></a>";
+
+                return $editBtn . $deleteBtn;
             })
-            ->rawColumns(['action', 'status',])
+
+            // Withdraw charge
+            ->addColumn('withdraw_charge', function ($query) {
+                return $query->withdraw_charge . '%';
+            })
+
+            ->rawColumns(['action'])
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Vendor $model): QueryBuilder
+    public function query(WithdrawMethod $model): QueryBuilder
     {
-        return $model->where('status', 0)->newQuery();
+        return $model->newQuery();
     }
 
     /**
@@ -72,11 +57,11 @@ class VendorRequestDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('vendorrequest-table')
+            ->setTableId('withdrawmethod-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
-            ->orderBy(0)
+            ->orderBy(1)
             ->selectStyleSingle()
             ->buttons([
                 Button::make('excel'),
@@ -96,10 +81,10 @@ class VendorRequestDataTable extends DataTable
         return [
 
             Column::make('id'),
-            Column::make('user_name'),
-            Column::make('shop_name'),
-            Column::make('shop_email'),
-            Column::make('status'),
+            Column::make('name'),
+            Column::make('minimum_amount'),
+            Column::make('maximum_amount'),
+            Column::make('withdraw_charge'),
 
             Column::computed('action')
                 ->exportable(false)
@@ -114,6 +99,6 @@ class VendorRequestDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'VendorRequest_' . date('YmdHis');
+        return 'WithdrawMethod_' . date('YmdHis');
     }
 }

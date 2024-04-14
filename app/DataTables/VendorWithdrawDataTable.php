@@ -2,8 +2,9 @@
 
 namespace App\DataTables;
 
-use App\Models\Vendor;
-use App\Models\VendorRequest;
+use App\Models\VendorWithdraw;
+use App\Models\WithdrawMethod;
+use App\Models\WithdrawRequest;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -13,7 +14,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class VendorRequestDataTable extends DataTable
+class VendorWithdrawDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,47 +24,49 @@ class VendorRequestDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-
-            // User name
-            ->addColumn('user_name', function ($query) {
-                return $query->user->name;
+            // Custom buttons
+            ->addColumn('action', function ($query) {
+                // Show button
+                $showBtn       =   "<a href='" . route('vendor.withdraw-show-request', $query->id) . "' class='btn btn-primary'>
+            <i class='far fa-eye'></i></a>";
+                return $showBtn;
             })
 
-            // Shop name
-            ->addColumn('shop_name', function ($query) {
-                return $query->shop_name;
+            // Withdraw
+            ->addColumn('withdraw_charge', function ($query) {
+                return getCurrencyIcon() . $query->withdraw_charge;
             })
-            // Shop email
-            ->addColumn('shop_email', function ($query) {
-                return $query->email;
+            ->addColumn('total_amount', function ($query) {
+                return getCurrencyIcon() . $query->total_amount;
+            })
+            ->addColumn('withdraw_amount', function ($query) {
+                return getCurrencyIcon() . $query->withdraw_amount;
             })
 
             // Status
             ->addColumn('status', function ($query) {
-                if ($query->status == 1) {
-                    return "<span class='badge bg-success'> completed </span>";
+                $yes        =       "<i class='badge bg-success'>Paid</i>";
+                $no         =       "<i class='badge bg-warning'>Pending</i>";
+                $declined   =       "<i class='badge bg-danger'>Declined</i>";
+                if ($query->status == 'pending') {
+                    return $no;
+                } else if ($query->status == 'paid') {
+                    return $yes;
                 } else {
-                    return "<span class='badge bg-warning'> pending </span>";
+                    return $declined;
                 }
             })
 
-            // Custom buttons
-            ->addColumn('action', function ($query) {
-                // Show button
-                $showBtn       =   "<a href='" . route('admin.vendor-requests.show', $query->id) . "' class='btn btn-primary'>
-            <i class='far fa-eye'></i></a>";
-                return $showBtn;
-            })
-            ->rawColumns(['action', 'status',])
+            ->rawColumns(['action', 'status'])
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Vendor $model): QueryBuilder
+    public function query(WithdrawRequest $model): QueryBuilder
     {
-        return $model->where('status', 0)->newQuery();
+        return $model->where('vendor_id', auth()->user()->id)->newQuery();
     }
 
     /**
@@ -72,11 +75,11 @@ class VendorRequestDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('vendorrequest-table')
+            ->setTableId('withdrawmethod-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
-            ->orderBy(0)
+            ->orderBy(1)
             ->selectStyleSingle()
             ->buttons([
                 Button::make('excel'),
@@ -96,15 +99,16 @@ class VendorRequestDataTable extends DataTable
         return [
 
             Column::make('id'),
-            Column::make('user_name'),
-            Column::make('shop_name'),
-            Column::make('shop_email'),
+            Column::make('method'),
+            Column::make('total_amount'),
+            Column::make('withdraw_amount'),
+            Column::make('withdraw_charge'),
             Column::make('status'),
 
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(200)
+                ->width(60)
                 ->addClass('text-center'),
         ];
     }
@@ -114,6 +118,6 @@ class VendorRequestDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'VendorRequest_' . date('YmdHis');
+        return 'VendorWithdraw_' . date('YmdHis');
     }
 }

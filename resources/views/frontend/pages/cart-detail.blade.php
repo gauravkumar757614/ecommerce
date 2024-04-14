@@ -83,7 +83,7 @@
 
                                             <td class="wsus__pro_tk">
                                                 <h6 id="{{ $item->rowId }}">
-                                                    {{ $settings->currency_icon . ($item->price + $item->options->variants_total) * $item->qty }}
+                                                    {{ $settings->currency_icon . ($item->price + $item->options->variants_total) * intval($item->qty) }}
                                                 </h6>
                                             </td>
 

@@ -7,7 +7,7 @@
         <div class="container-fluid">
 
             {{-- Sidebar --}}
-            @include('vendor.layouts.sidebar');
+            @include('vendor.layouts.sidebar')
             {{-- Sidebar End --}}
 
             <div class="row">
@@ -67,7 +67,8 @@
                                     <a class="wsus__dashboard_item purple" href="javascript:;">
                                         <i class="fas fa-cart-plus"></i>
                                         <p>Todays Earned</p>
-                                        <h4 style="color: #ffff"> {{ $settings->currency_icon }} {{ $todaysEarnings }}</h4>
+                                        <h4 style="color: #ffff"> {{ $settings->currency_icon }} {{ $todaysEarnings }}
+                                        </h4>
                                     </a>
                                 </div>
 
@@ -112,9 +113,6 @@
                                         <h4 style="color: #ffff"> - </h4>
                                     </a>
                                 </div>
-
-
-
                             </div>
                         </div>
                     </div>

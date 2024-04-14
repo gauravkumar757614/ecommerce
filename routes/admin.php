@@ -43,6 +43,8 @@ use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\VendorConditionController;
 use App\Http\Controllers\Backend\VendorListController;
 use App\Http\Controllers\Backend\VendorRequestController;
+use App\Http\Controllers\Backend\WithdrawController;
+use App\Http\Controllers\Backend\WithdrawMethodController;
 use Illuminate\Support\Facades\Route;
 
 // Profile routes
@@ -236,3 +238,10 @@ Route::resource('paypal-setting', PaypalSettingController::class);
 Route::put('stripe-setting/{stripe_setting}', [StripeSettingController::class, 'update'])->name('stripe-setting.update');
 Route::put('razor-setting/{razor_setting}', [RazorpaySettingController::class, 'update'])->name('razorpay-setting.update');
 Route::put('cod-setting/{id}', [CodSettingController::class, 'update'])->name('cod-setting.update');
+
+// Withdraw methods routes
+Route::resource('withdraw-method', WithdrawMethodController::class);
+// Withdraw list routes
+Route::get('withdraw', [WithdrawController::class, 'index'])->name('withdraw.index');
+Route::get('withdraw/{id}', [WithdrawController::class, 'show'])->name('withdraw.show');
+Route::put('withdraw/{id}', [WithdrawController::class, 'update'])->name('withdraw.update');

@@ -3,13 +3,20 @@
         <i class="far fa-bars dash_bar"></i>
         <i class="far fa-times dash_close"></i>
     </span>
-    <a href="dsahboard.html" class="dash_logo"><img src="images/logo.png" alt="logo" class="img-fluid"></a>
+    <a href="javascript:;" class="dash_logo"><img src="{{ asset(@$logo->logo) }}" alt="logo" class="img-fluid"></a>
     <ul class="dashboard_link">
 
         <li>
             <a class="{{ setActive(['vendor.dashboard']) }}" href="{{ route('vendor.dashboard') }}">
                 <i class="fas fa-tachometer"></i>
                 Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url('/') }}">
+                <i class="fas fa-tachometer"></i>
+                Go To Home
             </a>
         </li>
 
@@ -33,6 +40,14 @@
                 Reviews
             </a>
         </li>
+
+        <li>
+            <a class="{{ setActive(['vendor.withdraw.index']) }}" href="{{ route('vendor.withdraw.index') }}">
+                <i class="far fa-user"></i>
+                My withdraw
+            </a>
+        </li>
+
         <li>
             <a class="{{ setActive(['vendor.shop-profile.index']) }}" href="{{ route('vendor.shop-profile.index') }}">
                 <i class="far fa-user"></i>

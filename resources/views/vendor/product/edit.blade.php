@@ -202,26 +202,6 @@
                                     </div>
                                     {{-- Long description field end --}}
 
-                                    {{-- Top, best, featured fields --}}
-                                    <div class="form-group wsus_input">
-                                        <label for="inputState">Product type</label>
-                                        <select name="product_type" id="inputState" class="form-control">
-                                            <option value="">Select</option>
-                                            <option {{ $product->product_type == 'new_arrival' ? 'selected' : '' }}
-                                                value="new_arrival">New arrival</option>
-
-                                            <option {{ $product->product_type == 'featured_product' ? 'selected' : '' }}
-                                                value="featured_product">Featured product</option>
-
-                                            <option {{ $product->product_type == 'top_product' ? 'selected' : '' }}
-                                                value="top_product">Top product</option>
-
-                                            <option {{ $product->product_type == 'best_product' ? 'selected' : '' }}
-                                                value="best_product">Best product</option>
-                                        </select>
-                                    </div>
-                                    {{-- Top, best, featuredfields end --}}
-
                                     {{-- Seo title field --}}
                                     <div class="form-group wsus_input">
                                         <label for="">Seo title</label>

@@ -6,8 +6,6 @@
             <h1> Vendors pending requests </h1>
         </div>
 
-
-
         <div class="section-body">
             <div class="invoice">
                 <div class="invoice-print">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\BrandDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Product;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -103,6 +104,12 @@ class BrandController extends Controller
     public function destroy(string $id)
     {
         $brand      =       Brand::findOrFail($id);
+
+        // Checking before deleting is this brand has dependent products
+        if (Product::where('brand_id', $brand->id)->count() > 0) {
+            return response(['status' => 'error', 'message' => ' Cannot be deleted! This brand has dependent product.']);
+        }
+
         $this->deleteImage($brand->logo);
         $brand->delete();
 

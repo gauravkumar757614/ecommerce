@@ -13,6 +13,6 @@ class Wishlist extends Model
     // relation with product table
     public function product(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'product_id');
     }
 }

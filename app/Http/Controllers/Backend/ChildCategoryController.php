@@ -6,6 +6,8 @@ use App\DataTables\ChildCategoryDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\ChildCategory;
+use App\Models\HomePageSetting;
+use App\Models\Product;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -106,6 +108,24 @@ class ChildCategoryController extends Controller
     public function destroy(string $id)
     {
         $child_category     =       ChildCategory::findOrFail($id);
+
+        // Checking before deleting is this brand has dependent products
+        if (Product::where('child_category_id', $child_category->id)->count() > 0) {
+            return response(['status' => 'error', 'message' => ' Cannot be deleted! This Category has dependent relations with other categories.']);
+        }
+
+        $homeSetting        =       HomePageSetting::all();
+        foreach ($homeSetting as $item) {
+            $array          =       json_decode($item->value, true);
+            $collection     =       collect($array);
+
+            // Checking in the collection child category id exists or not
+            if ($collection->contains('child_category', $child_category->id)) {
+                return response(['status' => 'error', 'message' => ' Cannot be deleted! This Category has dependent relations with other categories.']);
+            }
+        }
+
+
         $child_category->delete();
 
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);

@@ -179,19 +179,6 @@
                                     </div>
                                     {{-- Long description field end --}}
 
-                                    {{-- Top, best, featured fields --}}
-                                    <div class="form-group wsus_input">
-                                        <label for="inputState">Product type</label>
-                                        <select name="product_type" id="inputState" class="form-control">
-                                            <option value="">Select</option>
-                                            <option value="new_arrival">New arrival</option>
-                                            <option value="featured_product">Featured product</option>
-                                            <option value="top_product">Top product</option>
-                                            <option value="best_product">Best product</option>
-                                        </select>
-                                    </div>
-                                    {{-- Top, best, featuredfields end --}}
-
                                     {{-- Seo title field --}}
                                     <div class="form-group wsus_input">
                                         <label for="">Seo title</label>

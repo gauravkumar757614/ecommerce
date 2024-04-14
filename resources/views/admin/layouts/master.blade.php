@@ -8,7 +8,7 @@
     {{-- Adding csrf token for ajax --}}
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <title>General Dashboard &mdash; Stisla</title>
+    <title>General Dashboard &mdash; {{ $settings->site_name }} </title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/bootstrap/css/bootstrap.min.css') }}">
@@ -72,16 +72,6 @@
             <div class="main-content">
                 @yield('content')
             </div>
-            <footer class="main-footer">
-
-                <div class="footer-left">
-                    Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad
-                        Nauval Azhar</a>
-                </div>
-                <div class="footer-right">
-                </div>
-
-            </footer>
         </div>
     </div>
 
@@ -121,7 +111,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Page Specific JS File -->
-    <script src="{{ asset('backend/assets/js/page/index-0.js') }}"></script>
+    {{-- <script src="{{ asset('backend/assets/js/page/index-0.js') }}"></script> --}}
 
     <!-- Template JS File -->
     <script src="{{ asset('backend/assets/js/scripts.js') }}"></script>
@@ -182,12 +172,12 @@
                                     window.location.reload();
                                 } else if (data.status == 'error') {
                                     Swal.fire(
-                                        'Deleted!',
+                                        'Cannot Delete!',
                                         data.message,
                                         'error'
                                     )
                                 }
-                                window.location.reload();
+                                // window.location.reload();
                             },
                             error: function(xhr, status, error) {
                                 console.log(error);
