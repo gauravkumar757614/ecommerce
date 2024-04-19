@@ -104,6 +104,8 @@ Route::get('blog', [BlogController::class, 'blog'])->name('blog');
 // Add product to wishlist
 Route::post('wishlist/add-product', [WishlistController::class, 'addToWishlist'])->name('wishlist.store');
 
+// Show product modal route
+Route::get('show-product-modal/{id}', [HomeController::class, 'showProductModal'])->name('show-product-modal');
 
 /**
  * This is custom user related routes

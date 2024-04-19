@@ -17,16 +17,25 @@ use App\Models\Slider;
 use App\Models\SubCategory;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Response;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $sliders                =       Slider::where('status', 1)->orderBy('serial', 'asc')->get();
+        $sliders                =       Cache::rememberForever('sliders', function(){
+                                            return Slider::where('status', 1)->orderBy('serial', 'asc')->get();
+                                        });
+
         $flashSaleDate          =       FlashSale::first();
-        $flashSaleItems         =       FlashSaleItem::where('show_at_home', 1)->where('status', 1)->get();
+
+        $flashSaleItems         =       FlashSaleItem::where('show_at_home', 1)->where('status', 1)->pluck('product_id')->toArray();
+
         $popularCategory        =       HomePageSetting::where('key', 'popular_category_section')->first();
+
         $brands                 =       Brand::where('status', 1)->where('is_featured', 1)->get();
+
         $typeBaseProducts       =       $this->getTypeBaseProduct();
 
         // Category queries
@@ -72,19 +81,34 @@ class HomeController extends Controller
     public function getTypeBaseProduct()
     {
         $typeBaseProduct        =       [];
-        $typeBaseProduct['new_arrival']             =       Product::where(['product_type' => 'new_arrival', 'is_approved' => 1, 'status' => 1])
+        $typeBaseProduct['new_arrival']             =       Product::withAvg('reviews', 'rating')
+            ->withCount('reviews')
+            ->with(['category', 'variants', 'productImageGallery'])
+            ->where(['product_type' => 'new_arrival', 'is_approved' => 1, 'status' => 1])
             ->orderBy('id', 'desc')
             ->take(8)
             ->get();
-        $typeBaseProduct['featured_product']        =       Product::where(['product_type' => 'featured_product', 'is_approved' => 1, 'status' => 1])
+
+        $typeBaseProduct['featured_product']        =       Product::withAvg('reviews', 'rating')
+            ->withCount('reviews')
+            ->with(['category', 'variants', 'productImageGallery'])
+            ->where(['product_type' => 'featured_product', 'is_approved' => 1, 'status' => 1])
             ->orderBy('id', 'desc')
             ->take(8)
             ->get();
-        $typeBaseProduct['top_product']             =       Product::where(['product_type' => 'top_product', 'is_approved' => 1, 'status' => 1])
+
+        $typeBaseProduct['top_product']             =       Product::withAvg('reviews', 'rating')
+            ->withCount('reviews')
+            ->with(['category', 'variants', 'productImageGallery'])
+            ->where(['product_type' => 'top_product', 'is_approved' => 1, 'status' => 1])
             ->orderBy('id', 'desc')
             ->take(8)
             ->get();
-        $typeBaseProduct['best_product']            =       Product::where(['product_type' => 'best_product', 'is_approved' => 1, 'status' => 1])
+
+        $typeBaseProduct['best_product']            =       Product::withAvg('reviews', 'rating')
+            ->withCount('reviews')
+            ->with(['category', 'variants', 'productImageGallery'])
+            ->where(['product_type' => 'best_product', 'is_approved' => 1, 'status' => 1])
             ->orderBy('id', 'desc')
             ->take(8)
             ->get();
@@ -112,5 +136,12 @@ class HomeController extends Controller
         $brands         =       Brand::where(['status' => 1])->get();
         $vendor         =       Vendor::findOrFail($id);
         return view('frontend.pages.vendor-products', compact('products', 'categories', 'brands', 'vendor'));
+    }
+
+    public function showProductModal(string $id)
+    {
+        $product        =       Product::findOrFail($id);
+        $content        =       view('frontend.layouts.modal', compact('product'))->render();
+        return Response::make($content, 200, ['Content-Type' => 'text/html']);
     }
 }

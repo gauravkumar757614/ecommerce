@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FooterInfo;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class FooterInfoController extends Controller
 {
@@ -17,38 +18,6 @@ class FooterInfoController extends Controller
     {
         $footerInfo     =       FooterInfo::first();
         return view('admin.footer.footer-info.index', compact('footerInfo'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**
@@ -78,6 +47,10 @@ class FooterInfoController extends Controller
                 'copywrite' =>      $request->copywrite,
             ]
         );
+
+        // Clearing the previous cached info after updating
+        Cache::forget('footer_info');
+
         toastr('Updated Successfully!', 'success', 'success');
         return redirect()->back();
     }

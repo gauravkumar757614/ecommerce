@@ -7,42 +7,41 @@
 @section('content')
 
     {{-- BANNER PART 2 START --}}
-    @include('frontend.home.sections.banner-slider');
+    @include('frontend.home.sections.banner-slider')
     {{-- BANNER PART 2 END --}}
 
     {{-- FLASH SALE START --}}
-    @include('frontend.home.sections.flash-sale');
+    @include('frontend.home.sections.flash-sale')
     {{-- FLASH SALE END --}}
 
     {{-- MONTHLY TOP PRODUCT START --}}
-    @include('frontend.home.sections.top-category-product');
+    @include('frontend.home.sections.top-category-product')
     {{-- MONTHLY TOP PRODUCT END --}}
 
     {{-- BRAND SLIDER START --}}
-    @include('frontend.home.sections.brand-slider');
+    @include('frontend.home.sections.brand-slider')
     {{-- BRAND SLIDER END --}}
 
     {{-- SINGLE BANNER START --}}
-    @include('frontend.home.sections.single-banner');
+    @include('frontend.home.sections.single-banner')
     {{-- SINGLE BANNER END --}}
 
     {{-- HOT DEALS START --}}
-    @include('frontend.home.sections.hot-deals');
+    @include('frontend.home.sections.hot-deals')
     {{-- HOT DEALS END --}}
 
-
     {{-- ELECTRONIC PART START --}}
-    @include('frontend.home.sections.category-product-slider-one');
+    @include('frontend.home.sections.category-product-slider-one')
     {{-- ELECTRONIC PART END --}}
 
 
     {{-- ELECTRONIC PART START --}}
-    @include('frontend.home.sections.category-product-slider-two');
+    @include('frontend.home.sections.category-product-slider-two')
     {{-- ELECTRONIC PART END --}}
 
 
     {{-- LARGE BANNER  START --}}
-    @include('frontend.home.sections.large-banner');
+    @include('frontend.home.sections.large-banner')
     {{-- LARGE BANNER  END --}}
 
 
@@ -52,11 +51,11 @@
 
 
     {{-- HOME SERVICES START --}}
-    {{-- @include('frontend.home.sections.services'); --}}
+    @include('frontend.home.sections.services')
     {{-- HOME SERVICES END --}}
 
 
     {{-- HOME BLOGS START --}}
-    @include('frontend.home.sections.blog');
+    @include('frontend.home.sections.blog')
     {{-- HOME BLOGS END --}}
 @endsection

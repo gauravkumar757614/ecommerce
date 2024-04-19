@@ -7,6 +7,7 @@
         <div class="row">
             <div class="col-xl-12 col-lg-12">
                 <div class="wsus__monthly_top_banner">
+
                     {{-- <div class="wsus__monthly_top_banner_img">
                         <a href="{{ $banner_one_content['banner_one']['banner_url'] }}">
                             <img src="{{ asset($banner_one_content['banner_one']['banner_image']) }}" alt="img"
@@ -20,6 +21,7 @@
                         <H6>Everything</H6>
                         <a class="shop_btn" href="#">shop now</a>
                     </div> --}}
+
                     @if ($banner_one_content['banner_one']['status'] == 1)
                         <div class="wsus__monthly_top_banner_img">
                             <a href="{{ $banner_one_content['banner_one']['banner_url'] }}">
@@ -52,7 +54,9 @@
                                 if (array_keys($lastKey)[0] == 'category') {
                                     // Category model
                                     $category = \App\Models\Category::find($lastKey['category']);
-                                    $products[] = \App\Models\Product::with('reviews')
+
+                                    $products[] = \App\Models\Product::withAvg('reviews', 'rating')
+                                        ->with(['category', 'variants', 'productImageGallery'])
                                         ->where('category_id', $category->id)
                                         ->orderBy('id', 'desc')
                                         ->take(12)
@@ -60,7 +64,9 @@
                                 } elseif (array_keys($lastKey)[0] == 'sub_category') {
                                     // Sub category model
                                     $category = \App\Models\SubCategory::find($lastKey['sub_category']);
-                                    $products[] = \App\Models\Product::with('reviews')
+
+                                    $products[] = \App\Models\Product::withAvg('reviews', 'rating')
+                                        ->with(['category', 'variants', 'productImageGallery'])
                                         ->where('sub_category_id', $category->id)
                                         ->orderBy('id', 'desc')
                                         ->take(12)
@@ -68,7 +74,9 @@
                                 } else {
                                     // Child category model
                                     $category = \App\Models\ChildCategory::find($lastKey['child_category']);
-                                    $products[] = \App\Models\Product::with('reviews')
+
+                                    $products[] = \App\Models\Product::withAvg('reviews', 'rating')
+                                        ->with(['category', 'variants', 'productImageGallery'])
                                         ->where('child_category_id', $category->id)
                                         ->orderBy('id', 'desc')
                                         ->take(12)
@@ -96,13 +104,9 @@
                                     <div class="wsus__hot_deals__single_text">
                                         <h5> {!! limitText($item->name) !!} </h5>
                                         <p class="wsus__rating">
-                                            @php
-                                                $avgRating = $item->reviews()->avg('rating');
-                                                $stars = round($avgRating);
-                                            @endphp
 
                                             @for ($i = 1; $i <= 5; $i++)
-                                                @if ($i <= $stars)
+                                                @if ($i <= $item->reviews_avg_rating)
                                                     <i class="fas fa-star"></i>
                                                 @else
                                                     <i class="far fa-star"></i>

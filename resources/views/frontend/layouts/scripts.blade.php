@@ -9,7 +9,7 @@
         });
 
         // Add product to cart
-        $('.shopping-cart-form').on('submit', function(e) {
+        $(document).on('submit', '.shopping-cart-form', function(e) {
             e.preventDefault();
             let formData = $(this).serialize();
             // console.log(formData);
@@ -205,6 +205,28 @@
                     $('.subscribe_btn').text('Subscribe');
                 }
 
+            })
+        })
+
+        $('.show_product_modal').on('click', function() {
+            let id = $(this).data('id');
+
+            $.ajax({
+                method: "GET",
+                url: '{{ route('show-product-modal', ':id') }}'.replace(":id", id),
+
+                beforeSend: function() {
+                    $('.product-modal-content').html('<span class="loader"></span>');
+                },
+                success: function(response) {
+                    $('.product-modal-content').html(response);
+                },
+                error: function(xhr, status, error) {
+
+                },
+                complete: function() {
+
+                }
             })
         })
 

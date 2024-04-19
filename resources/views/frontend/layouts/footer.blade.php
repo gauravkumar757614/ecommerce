@@ -1,12 +1,23 @@
 @php
     // Footer grid two
-    $footerInfo = \App\Models\FooterInfo::first();
-    $footerSocials = \App\Models\FooterSocial::where('status', 1)->get();
-    $footerLinks = \App\Models\FooterGridTwo::where('status', 1)->get();
+    $footerInfo = Cache::rememberForever('footer_info', function () {
+        return \App\Models\FooterInfo::first();
+    });
+    $footerSocials = Cache::rememberForever('footer_socials', function () {
+        return \App\Models\FooterSocial::where('status', 1)->get();
+    });
+
+    $footerLinks = Cache::rememberForever('footer_links', function () {
+        return \App\Models\FooterGridTwo::where('status', 1)->get();
+    });
+
     $footerTitle = \App\Models\FooterTitle::first();
 
     // Footer grid three
-    $footerThreeLinks = \App\Models\FooterGridThree::where('status', 1)->get();
+    $footerThreeLinks = Cache::rememberForever('footer_three_links', function () {
+        return \App\Models\FooterGridThree::where('status', 1)->get();
+    });
+
     $footerThreeTitle = \App\Models\FooterTitle::first();
 
 @endphp

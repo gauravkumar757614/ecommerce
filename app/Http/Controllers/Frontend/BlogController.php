@@ -19,7 +19,7 @@ class BlogController extends Controller
         } else if ($request->has('category')) {
             $category   =       BlogCategory::where(['slug' => $request->category, 'status' => 1])->firstOrFail();
 
-            $blogs      =       Blog::where('blog_category_id', $category->id)
+            $blogs      =       Blog::with(['category'])->where('blog_category_id', $category->id)
                 ->where('status', 1)->orderBy('id', 'desc')->paginate(12);
         } else {
 

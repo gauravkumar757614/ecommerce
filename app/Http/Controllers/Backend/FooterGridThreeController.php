@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FooterGridThree;
 use App\Models\FooterTitle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class FooterGridThreeController extends Controller
 {
@@ -43,6 +44,10 @@ class FooterGridThreeController extends Controller
         $grid->url     =   $request->url;
         $grid->status  =   $request->status;
         $grid->save();
+
+        // Clearing the previous cached links
+        Cache::forget('footer_three_links');
+
         toastr('Created Successfully!', 'success', 'success');
         return redirect()->route('admin.footer-grid-three.index');
     }
@@ -80,6 +85,10 @@ class FooterGridThreeController extends Controller
         $grid->url     =   $request->url;
         $grid->status  =   $request->status;
         $grid->save();
+
+        // Clearing the previous cached links
+        Cache::forget('footer_three_links');
+
         toastr('Updated Successfully!', 'success', 'success');
         return redirect()->route('admin.footer-grid-three.index');
     }
@@ -91,6 +100,10 @@ class FooterGridThreeController extends Controller
     {
         $grid       =       FooterGridThree::findOrFail($id);
         $grid->delete();
+
+        // Clearing the previous cached links
+        Cache::forget('footer_three_links');
+
         return response(['message' => 'Deleted Successfully!']);
     }
 
@@ -102,6 +115,10 @@ class FooterGridThreeController extends Controller
         $grid               =       FooterGridThree::findOrFail($request->id);
         $grid->status       =       $request->status == 'true' ? 1 : 0;
         $grid->save();
+
+        // Clearing the previous cached links
+        Cache::forget('footer_three_links');
+
         return response(['status' => 'success', 'message' => 'status updated successfully!']);
     }
 

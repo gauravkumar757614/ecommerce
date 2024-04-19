@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FooterGridTwo;
 use App\Models\FooterTitle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class FooterGridTwoController extends Controller
 {
@@ -43,6 +44,10 @@ class FooterGridTwoController extends Controller
         $grid->url     =   $request->url;
         $grid->status  =   $request->status;
         $grid->save();
+
+        // Removing the previous cached slider
+        Cache::forget('footer_links');
+
         toastr('Created Successfully!', 'success', 'success');
         return redirect()->route('admin.footer-grid-two.index');
     }
@@ -80,6 +85,9 @@ class FooterGridTwoController extends Controller
         $grid->url     =   $request->url;
         $grid->status  =   $request->status;
         $grid->save();
+
+        // Removing the previous cached slider
+        Cache::forget('footer_links');
         toastr('Updated Successfully!', 'success', 'success');
         return redirect()->route('admin.footer-grid-two.index');
     }
@@ -91,6 +99,9 @@ class FooterGridTwoController extends Controller
     {
         $grid       =       FooterGridTwo::findOrFail($id);
         $grid->delete();
+
+        // Removing the previous cached slider
+        Cache::forget('footer_links');
         return response(['message' => 'Deleted Successfully!']);
     }
 
@@ -102,6 +113,9 @@ class FooterGridTwoController extends Controller
         $grid               =       FooterGridTwo::findOrFail($request->id);
         $grid->status       =       $request->status == 'true' ? 1 : 0;
         $grid->save();
+
+        // Removing the previous cached slider
+        Cache::forget('footer_links');
         return response(['status' => 'success', 'message' => 'status updated successfully!']);
     }
 

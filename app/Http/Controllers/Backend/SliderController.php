@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Slider;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class SliderController extends Controller
 {
@@ -62,6 +63,8 @@ class SliderController extends Controller
         $slider->status             =       $request->status;
         $slider->save();
 
+        // Removing the previous cached slider
+        Cache::forget('sliders');
         // toastr notification for success
         toastr('Created Successfully', 'success');
         return redirect()->back();
@@ -90,7 +93,7 @@ class SliderController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'banner'            =>      ['nullable','image', 'max:2048'],
+            'banner'            =>      ['nullable', 'image', 'max:2048'],
             'type'              =>      ['string', 'max:200'],
             'title'             =>      ['max:200'],
             'starting_price'    =>      ['max:200'],
@@ -112,6 +115,8 @@ class SliderController extends Controller
         $slider->status             =       $request->status;
         $slider->save();
 
+        // Removing the previous cached slider
+        Cache::forget('sliders');
         // toastr notification for success
         toastr('Updated Successfully', 'success');
         return redirect()->route('admin.slider.index');
@@ -126,6 +131,8 @@ class SliderController extends Controller
         $this->deleteImage($slider->banner);
         $slider->delete();
 
+        // Removing the previous cached slider
+        Cache::forget('sliders');
         return response(['status' => 'success', 'message' => 'Deleted successfully!']);
     }
 }
