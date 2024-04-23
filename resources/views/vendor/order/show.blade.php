@@ -12,7 +12,7 @@
     <section id="wsus__dashboard">
         <div class="container-fluid">
             {{-- Sidebar --}}
-            @include('vendor.layouts.sidebar');
+            @include('vendor.layouts.sidebar')
             {{-- Sidebar End --}}
 
             <div class="row">

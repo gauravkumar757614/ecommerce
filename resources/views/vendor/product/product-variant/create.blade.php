@@ -1,4 +1,4 @@
-@extends('vendor.layouts.master');
+@extends('vendor.layouts.master')
 
 @section('title')
     {{ $settings->site_name }} || Product-Variant
@@ -9,7 +9,7 @@
     <section id="wsus__dashboard">
         <div class="container-fluid">
             {{-- Sidebar --}}
-            @include('vendor.layouts.sidebar');
+            @include('vendor.layouts.sidebar')
             {{-- Sidebar End --}}
 
             <div class="row">

@@ -35,12 +35,13 @@
     {{-- This is the javascript css cdn for the Laravel Toastr --}}
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
+    @vite(['resources/js/app.js'])
 </head>
 
 <body>
 
     {{-- HEADER START --}}
-    @include('frontend.layouts.header');
+    @include('frontend.layouts.header')
     {{-- HEADER END --}}
 
     {{-- MAIN MENU START --}}

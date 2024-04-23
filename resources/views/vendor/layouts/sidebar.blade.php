@@ -20,6 +20,12 @@
             </a>
         </li>
 
+        <li><a class="{{ setActive(['vendor.messages.index']) }}" href="{{ route('vendor.messages.index') }}">
+                <i class="fas fa-tachometer"></i>
+                Messages
+            </a>
+        </li>
+
         <li>
             <a class="{{ setActive(['vendor.orders.index']) }}" href="{{ route('vendor.orders.index') }}">
                 <i class="far fa-user"></i>

@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\EmailConfiguration;
 use App\Models\GeneralSetting;
 use App\Models\LogoSetting;
+use App\Models\PusherSetting;
 use App\Traits\ImageUploadTrait;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -18,8 +20,9 @@ class SettingController extends Controller
         $generalSetting         =       GeneralSetting::first();
         $emailSetting           =       EmailConfiguration::first();
         $logoSetting            =       LogoSetting::first();
+        $pusherSetting          =       PusherSetting::first();
 
-        return view('admin.setting.index', compact('generalSetting', 'emailSetting', 'logoSetting'));
+        return view('admin.setting.index', compact('generalSetting', 'emailSetting', 'logoSetting', 'pusherSetting'));
     }
 
     /**
@@ -109,6 +112,26 @@ class SettingController extends Controller
         );
 
         toastr('Updated successfully!', 'success', 'success');
+        return redirect()->back();
+    }
+
+    // Pusher setting update
+    public function pusherSettingUpdate(Request $request): RedirectResponse
+    {
+        $validatedData          =       $request->validate([
+                                            'app_id'            =>      ['required', 'max:200'],
+                                            'key'               =>      ['required', 'max:200'],
+                                            'secret'            =>      ['required', 'max:200'],
+                                            'cluster'           =>      ['required', 'max:200'],
+
+                                        ]);
+
+        PusherSetting::updateOrCreate(
+            ['id' => 1],
+            $validatedData
+        );
+
+        toastr('Updated Successfully!', 'success');
         return redirect()->back();
     }
 }

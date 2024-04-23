@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Backend\VendorMessageController;
 use App\Http\Controllers\Backend\VendorOrderController;
 use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\Backend\VendorProductImageGalleryController;
@@ -20,6 +21,8 @@ Route::post('profile', [vendorProfileController::class, 'updatePassword'])->name
 // Vendor shop profile routes
 Route::resource('shop-profile', VendorShopProfileController::class);
 
+// Messenger routes
+Route::get('messages', [VendorMessageController::class, 'index'])->name('messages.index');
 
 // Fetching related categories according to the selected one
 Route::get('product/get-subcategories', [VendorProductController::class, 'getSubCategories'])->name('product.get-subcategories');

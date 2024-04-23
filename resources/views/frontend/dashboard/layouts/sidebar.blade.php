@@ -11,6 +11,13 @@
                 Dashboard
             </a>
         </li>
+
+        <li><a class="{{ setActive(['user.messages.index']) }}" href="{{ route('user.messages.index') }}">
+                <i class="fas fa-tachometer"></i>
+                Messages
+            </a>
+        </li>
+
         <li>
             <a href="{{ url('/') }}">
                 <i class="fas fa-home"></i>

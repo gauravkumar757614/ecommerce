@@ -152,6 +152,7 @@ Route::get('settings', [SettingController::class, 'index'])->name('settings.inde
 Route::put('general-setting-update', [SettingController::class, 'generalSettingUpdate'])->name('general-setting-update');
 Route::put('email-configuration', [SettingController::class, 'emailConfiguration'])->name('email-configuration');
 Route::put('logo-setting-update', [SettingController::class, 'logoSettingUpdate'])->name('logo-setting-update');
+Route::put('pusher-setting-update', [SettingController::class, 'pusherSettingUpdate'])->name('pusher-setting-update');
 
 
 // Home page setting routes
